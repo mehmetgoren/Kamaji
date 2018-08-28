@@ -1,0 +1,47 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <LangVersion>7.1</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>X:\Projects\Kamaji\builds\</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="2.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Kamaji.Common\Kamaji.Common.csproj" />
+    <ProjectReference Include="..\Kamaji.Data\Kamaji.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="ionix.Utils">
+      <HintPath>..\..\..\..\ionix.Core\builds\netstandard2.0\ionix.Utils.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLog">
+      <HintPath>..\..\..\..\ionix.Core\builds\netstandard2.0\SQLog.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Datasources\InternalResources\Zip\puppeteer_1.4.0&amp;express_4.16.3.zip">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

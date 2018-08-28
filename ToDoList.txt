@@ -1,0 +1,35 @@
+* IWorker ýnterface' i.
+* IObserver i,nterface' i.
+* Kendi Timer' ýuný oluþtur.
+
+* IObserver KamajiWorker' a taþýnmalý ki workerlar da da observe edebilsin.+++
+* NanoServiceBase' in property' lerini ScanModel' e taþý ki bu þekilde konfigüre edebil.
+* Worker' larda nodejs process lerinmi yok etmek için önce port üzerinden process id ye eriþ ardýndan da process id ile kill et. Hem Windows hem de linux için+++
+
+
+* Kamaji, Node ve worker kendi iþlerini kendi halletmelki ve baðýmlýlýklarý minimum da olmalý
+* Db' ye sadece Kamaji eriþenilir. Worker, ve Node' larýn bunu yapmaya imkaný yoktur.+
+* Worker lar sadece single task üzerinde çalkýþacak. Kendileri ayrý Task' lar oluþturamayacak.
+* Node ve Kamaji çift taraflý api' ler lert duplex connection' a sahiplerdir ve bunu IObserver imlementasyonlarý ile de real time  oalrak gerçekleþtirirler.
+* Kamaji' nin MongoDB yanýnda Postgres implementasyonu da yapýlacak.
+* Alarm / Notification yapýsaý gerekli.
+* Spider' ý yazarken IObserver' da yapýlsýn ve ilk etapta console bassýn yapýlanlarý
+* MongoDB' de ScanPrerequisite.Resource kayýt edilirken 16mb' i geçmiyorsa db' yde geçiyorsa dosyaya kaydet ve bunun için path null ise veriye baksýn  örneðin.
+* ScanPreq ve Source version bilgilerine göre güncellenebilsin.
+* Örneðim 16,000,000 port taranýrken bunlar da elbette gruplar halinde node' lara daðýtýlmalý ve parentId' leri tek bir yerden atanabilmeli
+* Nde ve scanix in doðrudan bir iletiþimi olmamlý. Herþey Kamaji üzerinden yapýlmalý.
+* Node' lar kamaji' ye ilk baðlandýklarýnda Node' un konfigürasyon bilgisini ilgili node' a göndersin. Örneðin Queue dservisin ne kadar wait yapacaðý gibi.
+* Node' larýn bir exit komutu olsun ve ilgili kaynaklarý silip kendi processini exit lesin.
+* Kamaji ve node' lar bir api method ile SQLog Query' ye imkan versin.
+* WebSpider' ý stop ederken werkerservicebase e de bir parent ekle ve bu parent' ýn child lerini de stopla.....
+
+*Önce WebScan, Process scan, Port Scan(Nmap), OpenVas ve open source diðer web zaafiyet tarayýcý.
+
+* Bir de dovizborsa da anlýk deðiþmleri alýp result olarak gönderecek bir servis olacak. Sonra bu servis üzerinde regression algoritmalarý çalýþtýrýlýp dolar tahmini yapacaðýz.
+* Process takibi ve classification ile zararlý process lerin tespiti.
+
+
+
+!!!!!!!!!!!! "c# distributed computing" google' da arat:
+https://msdn.microsoft.com/en-us/library/dd129906.aspx?f=255&MSPPError=-2147217396
+https://docs.microsoft.com/en-us/dotnet/standard/parallel-programming/task-parallel-library-tpl

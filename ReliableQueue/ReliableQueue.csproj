@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="2.1.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="4.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="ionix.Data">
+      <HintPath>..\..\..\..\ionix.Core\builds\netstandard2.0\ionix.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="ionix.Data.SQLite">
+      <HintPath>..\..\..\..\ionix.Core\builds\netstandard2.0\ionix.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="ionix.Migration">
+      <HintPath>..\..\..\..\ionix.Core\builds\netstandard2.0\ionix.Migration.dll</HintPath>
+    </Reference>
+    <Reference Include="ionix.Migration.SQLite">
+      <HintPath>..\..\..\..\ionix.Core\builds\netstandard2.0\ionix.Migration.SQLite.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

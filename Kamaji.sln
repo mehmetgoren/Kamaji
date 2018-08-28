@@ -1,0 +1,93 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2026
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kamaji.Data", "Kamaji.Data\Kamaji.Data.csproj", "{E9A1B5B8-D7FE-4A10-BAE0-A32DE7E025A7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kamaji.Data.Mongo", "Kamaji.Data.Mongo\Kamaji.Data.Mongo.csproj", "{97D31EA2-043F-430C-91DB-37374BB66FF8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{F8ABAE07-F362-4BC7-80C2-B1417AACD6E7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kamaji", "Kamaji\Kamaji.csproj", "{23B3F9C9-3AAF-447F-82E4-3F0257B67A0B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kamaji.Node", "Kamaji.Node\Kamaji.Node.csproj", "{71664FF3-231E-4A4A-8C77-AD09FB057BED}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApi", "WebApi", "{B435FFCA-4140-4D16-AA77-7555BA64CBDB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kamaji.Common", "Kamaji.Common\Kamaji.Common.csproj", "{4F87EE5E-75A2-4A74-9DD2-3B36B3763311}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{22819CF7-9AD9-43F4-A35D-8821D830811B}"
+	ProjectSection(SolutionItems) = preProject
+		StartKamaji.bat = StartKamaji.bat
+		StartNode.bat = StartNode.bat
+		Tests.bat = Tests.bat
+		ToDoList.txt = ToDoList.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Others", "Others", "{93B53230-5930-4A4A-816F-1861D2FB0429}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KamajiTests", "KamajiTests\KamajiTests.csproj", "{61D0D94E-06D4-4ACD-8676-2573553CEA74}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{87B8EEF1-5170-4A23-A3EC-996E6286C9AC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kamaji.Worker", "Kamaji.Worker\Kamaji.Worker.csproj", "{F6BD3E45-D426-47D9-BE37-7A1D8BE8BBC9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReliableQueue", "ReliableQueue\ReliableQueue.csproj", "{A8B7BD05-696C-4C2C-AF8B-8F3DFEC81905}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E9A1B5B8-D7FE-4A10-BAE0-A32DE7E025A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9A1B5B8-D7FE-4A10-BAE0-A32DE7E025A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9A1B5B8-D7FE-4A10-BAE0-A32DE7E025A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9A1B5B8-D7FE-4A10-BAE0-A32DE7E025A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97D31EA2-043F-430C-91DB-37374BB66FF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97D31EA2-043F-430C-91DB-37374BB66FF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97D31EA2-043F-430C-91DB-37374BB66FF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97D31EA2-043F-430C-91DB-37374BB66FF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23B3F9C9-3AAF-447F-82E4-3F0257B67A0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23B3F9C9-3AAF-447F-82E4-3F0257B67A0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23B3F9C9-3AAF-447F-82E4-3F0257B67A0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23B3F9C9-3AAF-447F-82E4-3F0257B67A0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71664FF3-231E-4A4A-8C77-AD09FB057BED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71664FF3-231E-4A4A-8C77-AD09FB057BED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71664FF3-231E-4A4A-8C77-AD09FB057BED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71664FF3-231E-4A4A-8C77-AD09FB057BED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F87EE5E-75A2-4A74-9DD2-3B36B3763311}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F87EE5E-75A2-4A74-9DD2-3B36B3763311}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F87EE5E-75A2-4A74-9DD2-3B36B3763311}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F87EE5E-75A2-4A74-9DD2-3B36B3763311}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61D0D94E-06D4-4ACD-8676-2573553CEA74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61D0D94E-06D4-4ACD-8676-2573553CEA74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61D0D94E-06D4-4ACD-8676-2573553CEA74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61D0D94E-06D4-4ACD-8676-2573553CEA74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6BD3E45-D426-47D9-BE37-7A1D8BE8BBC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6BD3E45-D426-47D9-BE37-7A1D8BE8BBC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6BD3E45-D426-47D9-BE37-7A1D8BE8BBC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6BD3E45-D426-47D9-BE37-7A1D8BE8BBC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8B7BD05-696C-4C2C-AF8B-8F3DFEC81905}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8B7BD05-696C-4C2C-AF8B-8F3DFEC81905}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8B7BD05-696C-4C2C-AF8B-8F3DFEC81905}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8B7BD05-696C-4C2C-AF8B-8F3DFEC81905}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E9A1B5B8-D7FE-4A10-BAE0-A32DE7E025A7} = {F8ABAE07-F362-4BC7-80C2-B1417AACD6E7}
+		{97D31EA2-043F-430C-91DB-37374BB66FF8} = {F8ABAE07-F362-4BC7-80C2-B1417AACD6E7}
+		{23B3F9C9-3AAF-447F-82E4-3F0257B67A0B} = {B435FFCA-4140-4D16-AA77-7555BA64CBDB}
+		{71664FF3-231E-4A4A-8C77-AD09FB057BED} = {B435FFCA-4140-4D16-AA77-7555BA64CBDB}
+		{4F87EE5E-75A2-4A74-9DD2-3B36B3763311} = {87B8EEF1-5170-4A23-A3EC-996E6286C9AC}
+		{61D0D94E-06D4-4ACD-8676-2573553CEA74} = {93B53230-5930-4A4A-816F-1861D2FB0429}
+		{F6BD3E45-D426-47D9-BE37-7A1D8BE8BBC9} = {87B8EEF1-5170-4A23-A3EC-996E6286C9AC}
+		{A8B7BD05-696C-4C2C-AF8B-8F3DFEC81905} = {93B53230-5930-4A4A-816F-1861D2FB0429}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AE5AB9C3-1815-46B2-8D7D-F9C081750CD3}
+	EndGlobalSection
+EndGlobal

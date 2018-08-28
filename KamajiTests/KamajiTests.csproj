@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <LangVersion>7.1</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>bin\Debug\</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="puppeteer_1.4.0&amp;express_4.16.3.zip" />
+    <None Remove="WebPageHtmlSourceWorker.zip" />
+    <None Remove="WebPageScreenshotWorker.zip" />
+    <None Remove="WebPageSpider.zip" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.1.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="1.3.2" />
+    <PackageReference Include="MSTest.TestFramework" Version="1.3.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Kamaji.Common\Kamaji.Common.csproj" />
+    <ProjectReference Include="..\Kamaji.Data\Kamaji.Data.csproj" />
+    <ProjectReference Include="..\ReliableQueue\ReliableQueue.csproj" />
+  </ItemGroup>
+
+</Project>
