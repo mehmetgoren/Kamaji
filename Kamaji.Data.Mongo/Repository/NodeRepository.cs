@@ -4,6 +4,7 @@
     using ionix.Data.Mongo.Serializers;
     using Kamaji.Data.Models;
     using Kamaji.Data.Mongo.Models;
+    using MongoDB.Bson;
     using MongoDB.Driver;
     using MongoDB.Driver.Linq;
     using System;
@@ -56,6 +57,14 @@
                 });
 
             return result.FirstOrDefault()?.Node?.NodeId;
+        }
+
+        public async Task<INodeModel> GetBy(object nodeId)
+        {
+            if (nodeId is ObjectId id)
+                return await this.Db.Nodes.GetByIdAsync(id);
+
+            return null;
         }
     }
 }

@@ -18,6 +18,8 @@
         }
 
 
+        protected virtual void OnHttpClientCreated(HttpClient httpClient) { }
+
         public virtual async Task<T> GetAsync<T>(string url)
         {
             try
@@ -25,6 +27,7 @@
                 using (HttpClient client = new HttpClient())
                 {
                     client.DefaultRequestHeaders.Authorization = this.CreateAuthenticationHeader();
+                    this.OnHttpClientCreated(client);
 
                     Uri uri = new Uri(this.Host + "/" + url);
                     using (HttpResponseMessage response = await client.GetAsync(uri, CancellationToken.None))
@@ -54,6 +57,7 @@
                 using (HttpClient client = new HttpClient())
                 {
                     client.DefaultRequestHeaders.Authorization = this.CreateAuthenticationHeader();
+                    this.OnHttpClientCreated(client);
 
                     Uri uri = new Uri(this.Host + "/" + url);
 

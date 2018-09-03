@@ -41,11 +41,13 @@
 
         public ObjectId? LastAssignedNodeId { get; set; }
 
+        public ObjectId? SelectedNodeId { get; set; }
 
 
         object IScanModel.ScanId { get => this.ScanId; set => this.ScanId = (ObjectId)value; }
         object IScanModel.ParentId { get => this.ParentId; set => this.ParentId = (ObjectId)value; }
         object IScanModel.ScanResourceId { get => this.ScanResourceId; set => this.ScanResourceId = (ObjectId?)value; }
         object IScanModel.LastAssignedNodeId { get => this.LastAssignedNodeId; set => this.LastAssignedNodeId = (ObjectId?)value; }
+        object IScanModel.SelectedNodeId { get => this.SelectedNodeId; set => this.SelectedNodeId = (ObjectId?)value; }
     }
 }

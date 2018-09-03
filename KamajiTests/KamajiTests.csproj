@@ -11,10 +11,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="puppeteer_1.4.0&amp;express_4.16.3.zip" />
     <None Remove="WebPageHtmlSourceWorker.zip" />
     <None Remove="WebPageScreenshotWorker.zip" />
-    <None Remove="WebPageSpider.zip" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,6 +25,15 @@
     <ProjectReference Include="..\Kamaji.Common\Kamaji.Common.csproj" />
     <ProjectReference Include="..\Kamaji.Data\Kamaji.Data.csproj" />
     <ProjectReference Include="..\ReliableQueue\ReliableQueue.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="puppeteer_1.4.0&amp;express_4.16.3.zip">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="WebPageSpider.zip">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

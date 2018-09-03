@@ -7,12 +7,12 @@
     {
         NotStarted = 1,
         Assigned = 2,//Kamaji ScanQueueService ile atadığında 
-        //AssignFailed
-        Running = 4,//WorkerBase' de Staret da.
-        Stopped = 8,//kullanıcı tarafından durdurduğunda. Örneğin arayüzden
-        Cancelled = 16,//node showdown edilince.
-        Completed = 32,//Once' da tamamlanmdığında. Örneğin linkler veya taramalar birince.
-        Failed = 64// Hata yüzünden veya max error dan  durdurulunca.
+        AssignFailed = 4,
+        Running = 8,//WorkerBase' de Staret da.
+        Stopped = 16,//kullanıcı tarafından durdurduğunda. Örneğin arayüzden
+        Cancelled = 32,//node showdown edilince.
+        Completed = 64,//Once' da tamamlanmdığında. Örneğin linkler veya taramalar birince.
+        Failed = 128// Hata yüzünden veya max error dan  durdurulunca.
     }
 
     public enum ScanType
@@ -55,5 +55,10 @@
         int MaxErrorLimit { get; set; }
 
         object LastAssignedNodeId { get; set; }
+
+        /// <summary>
+        /// If a user forces the scan to run on a specific node. 
+        /// </summary>
+        object SelectedNodeId { get; set; }
     }
 }

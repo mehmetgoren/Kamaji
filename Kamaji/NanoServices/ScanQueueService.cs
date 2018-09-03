@@ -27,13 +27,13 @@
         {
             using (IKamajiContext db = DI.Provider.GetService<IKamajiContext>())
             {
-                INodeModel node = await ChoseNode(db);
-                if (null != node)//eğer node bağlandıysa.
+                IEnumerable<IScanModel> scanList = await db.Scans.GetListBy(true, ScanState.NotStarted, ScanState.Cancelled);//Buraya parantid null olan da eklenebilir child lar otomatik başlıyorsa
+                if (null != scanList && scanList.Any())
                 {
-                    IEnumerable<IScanModel> scanList = await db.Scans.GetListBy(true, ScanState.NotStarted, ScanState.Cancelled);//Buraya parantid null olan da eklenebilir child lar otomatik başlıyorsa
-                    if (null != scanList && scanList.Any())
+                    foreach (IScanModel scan in scanList)
                     {
-                        foreach (IScanModel scan in scanList)
+                        INodeModel node = await ChoseNode(db, scan);
+                        if (null != node)//eğer node bağlandıysa.
                         {
                             IScanResourceModel scanResource = await db.ScanResources.GetBy(scan.ScanResourceId);
                             if (null != scanResource)
@@ -47,18 +47,51 @@
                                     scan.State = ScanState.Assigned;
                                     scan.LastAssignedNodeId = node.NodeId;
                                     await db.Scans.Edit(scan);
-                                    observer.Notify("ScanQueueService.Execute", $"a {scan.Asset} of {scanResource.Name} job has been assign to a node which name  is '{node.Address}'", null);
+                                    observer.Notify("ScanQueueService.Execute", $"a {scan.Asset} of {scanResource.Name} job has been assign to a node which name  is '{node.Address}'.", null);
                                 }
                                 else
-                                    observer.Notify("ScanQueueService.Execute", $"Warning!!!!. A {scan.Asset} of {scanResource.Name} job couldn't assign to a node which name  is '{node.Address}'", null);
+                                {
+                                    await OnAssingFailed(db, scan);
+                                    observer.Notify("ScanQueueService.Execute", $"Warning!!!!. A {scan.Asset} of {scanResource.Name} job couldn't assign to a node which name  is '{node.Address}'.", null);
+                                }
                             }
+                        }
+                        else
+                        {
+                            scan.Enabled = false;
+                            await OnAssingFailed(db, scan);
+                            observer.Notify("ScanQueueService.Execute", $"Warning!!!!... Assigning has been failed. The scan asset: {scan.Asset}.", null);
                         }
                     }
                 }
             }
         }
 
-        private static async Task<INodeModel> ChoseNode(IKamajiContext db)
+        private static async Task OnAssingFailed(IKamajiContext db, IScanModel scan)
+        {
+            scan.State = ScanState.AssignFailed;
+            await db.Scans.Edit(scan);
+        }
+
+        private static async Task<INodeModel> ChoseNode(IKamajiContext db, IScanModel scan)
+        {
+            INodeModel ret = null;
+            if (null != scan)
+            {
+                if (scan.SelectedNodeId != null)
+                {
+                    ret = await db.Nodes.GetBy(scan.SelectedNodeId);
+                }
+                else
+                {
+                    ret = await GetOptimumNode(db);
+                }
+            }
+
+            return ret;
+        }
+
+        private static async Task<INodeModel> GetOptimumNode(IKamajiContext db)
         {
             IEnumerable<INodeModel> nodes = await db.Nodes.GetAll();
             if (null != nodes && nodes.Any())

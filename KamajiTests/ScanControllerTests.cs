@@ -32,20 +32,20 @@ namespace KamajiTests
             ScanResourceModel model;
 
 
-            model = new ScanResourceModel();
-            model.Name = "WebPageHtmlSource";
-            model.Version = "1.0.0";
-            model.ScanPrerequisiteName = "puppeteer";
-            model.Resources = await File.ReadAllBytesAsync(Utility.GetExecutionPath() + "\\WebPageHtmlSourceWorker.zip");
-            result = await RestClient.Instance.PostAsync<int>("Scan/SaveScanResource", model);
+            //model = new ScanResourceModel();
+            //model.Name = "WebPageHtmlSource";
+            //model.Version = "1.0.0";
+            //model.ScanPrerequisiteName = "puppeteer";
+            //model.Resources = await File.ReadAllBytesAsync(Utility.GetExecutionPath() + "\\WebPageHtmlSourceWorker.zip");
+            //result = await RestClient.Instance.PostAsync<int>("Scan/SaveScanResource", model);
 
 
-            model = new ScanResourceModel();
-            model.Name = "WebPageScreenshotWorker";
-            model.Version = "1.0.0";
-            model.ScanPrerequisiteName = "puppeteer";
-            model.Resources = await File.ReadAllBytesAsync(Utility.GetExecutionPath() + "\\WebPageScreenshotWorker.zip");
-            result = await RestClient.Instance.PostAsync<int>("Scan/SaveScanResource", model);
+            //model = new ScanResourceModel();
+            //model.Name = "WebPageScreenshotWorker";
+            //model.Version = "1.0.0";
+            //model.ScanPrerequisiteName = "puppeteer";
+            //model.Resources = await File.ReadAllBytesAsync(Utility.GetExecutionPath() + "\\WebPageScreenshotWorker.zip");
+            //result = await RestClient.Instance.PostAsync<int>("Scan/SaveScanResource", model);
 
 
             model = new ScanResourceModel();
@@ -81,7 +81,7 @@ namespace KamajiTests
 
 
             model = new ScanModel();
-            model.Asset = "http://toastytech.com/evil/";// "https://demos.telerik.com/aspnet-mvc/tripxpert/";
+            model.Asset = "http://toastytech.com/evil/"; //"https://demos.telerik.com/aspnet-mvc/tripxpert/";
             model.Type = ScanModel.ScanType.Once;
             model.ResourceName = "WebPageSpider";
             result = await RestClient.Instance.PostAsync<int>("Scan/SaveScan", model);

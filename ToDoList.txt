@@ -22,6 +22,7 @@
 * Node' larýn bir exit komutu olsun ve ilgili kaynaklarý silip kendi processini exit lesin.
 * Kamaji ve node' lar bir api method ile SQLog Query' ye imkan versin.
 * WebSpider' ý stop ederken werkerservicebase e de bir parent ekle ve bu parent' ýn child lerini de stopla.....
+* ScanQueueService' de oluþan assing failed için daha detaylý mesajlar yazýlmalý.
 
 *Önce WebScan, Process scan, Port Scan(Nmap), OpenVas ve open source diðer web zaafiyet tarayýcý.
 

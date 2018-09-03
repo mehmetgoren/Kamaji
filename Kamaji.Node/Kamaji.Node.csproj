@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>X:\Projects\Kamaji\builds2\</OutputPath>
+    <OutputPath>X:\Projects\Kamaji\buildsNode\</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>

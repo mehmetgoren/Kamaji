@@ -13,5 +13,7 @@
         Task<IEnumerable<INodeModel>> GetAll();
 
         Task<object> GetIdBy(string nodeAddress);
+
+        Task<INodeModel> GetBy(object nodeId);
     }
 }

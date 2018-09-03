@@ -32,10 +32,14 @@
             Stopwatch bench = Stopwatch.StartNew();
             try
             {
-               // await new ScanControllerTests().SaveScanResourceTest();
-                await new ScanControllerTests().SaveScanTest();
+                //await new ScanControllerTests().SaveScanPrerequisiteTest();
+                 //await new ScanControllerTests().SaveScanResourceTest();
+                 await new ScanControllerTests().SaveScanTest();
             }
-            catch { }
+            catch(Exception ex) {
+                Console.WriteLine("Not Ok!!!... " + ex.Message);
+                return;
+            }
             // await new ScanControllerTests().AddScanPrerequisiteTest();
             //  await new ScanControllerTests().AddScanResourceTest
             //  await new ScanControllerTests().AddScanTest();
