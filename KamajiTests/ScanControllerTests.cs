@@ -48,13 +48,19 @@ namespace KamajiTests
             //result = await RestClient.Instance.PostAsync<int>("Scan/SaveScanResource", model);
 
 
-            model = new ScanResourceModel();
-            model.Name = "WebPageSpider";
-            model.Version = "1.0.0";
-            model.ScanPrerequisiteName = "puppeteer";
-            model.Resources = await File.ReadAllBytesAsync(Utility.GetExecutionPath() + "\\WebPageSpider.zip");
-            result = await RestClient.Instance.PostAsync<int>("Scan/SaveScanResource", model);
+            //model = new ScanResourceModel();
+            //model.Name = "WebPageSpider";
+            //model.Version = "1.0.0";
+            //model.ScanPrerequisiteName = "puppeteer";
+            //model.Resources = await File.ReadAllBytesAsync(Utility.GetExecutionPath() + "\\WebPageSpider.zip");
+            //result = await RestClient.Instance.PostAsync<int>("Scan/SaveScanResource", model);
 
+
+            model = new ScanResourceModel();
+            model.Name = "TerminalWorker";
+            model.Version = "1.0.0";
+            model.Resources = await File.ReadAllBytesAsync(Utility.GetExecutionPath() + "\\TerminalWorker.zip");
+            result = await RestClient.Instance.PostAsync<int>("Scan/SaveScanResource", model);
 
             Assert.AreEqual(result, 1);
         }
@@ -80,10 +86,18 @@ namespace KamajiTests
             //result = await RestClient.Instance.PostAsync<int>("Scan/SaveScan", model);
 
 
+            //model = new ScanModel();
+            //model.Asset = "https://demos.telerik.com/aspnet-mvc/tripxpert/";//"http://toastytech.com/evil/";
+            //model.Type = ScanModel.ScanType.Once;
+            //model.ResourceName = "WebPageSpider";
+            //result = await RestClient.Instance.PostAsync<int>("Scan/SaveScan", model);
+
+
             model = new ScanModel();
-            model.Asset = "http://toastytech.com/evil/"; //"https://demos.telerik.com/aspnet-mvc/tripxpert/";
-            model.Type = ScanModel.ScanType.Once;
-            model.ResourceName = "WebPageSpider";
+            model.Asset = "get-process -ComputerName ANKARA";
+            model.SaveType = ScanModel.ScanSaveType.Upsert;
+            model.ResourceName = "TerminalWorker";
+            model.Period = 10000;
             result = await RestClient.Instance.PostAsync<int>("Scan/SaveScan", model);
 
             Assert.AreEqual(result, 1);

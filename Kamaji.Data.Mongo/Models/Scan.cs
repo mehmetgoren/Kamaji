@@ -43,6 +43,8 @@
 
         public ObjectId? SelectedNodeId { get; set; }
 
+        public ScanSaveType SaveType { get; set; }
+
 
         object IScanModel.ScanId { get => this.ScanId; set => this.ScanId = (ObjectId)value; }
         object IScanModel.ParentId { get => this.ParentId; set => this.ParentId = (ObjectId)value; }

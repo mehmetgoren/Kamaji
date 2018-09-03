@@ -24,6 +24,8 @@
                 internal const string AddChildScans = "api/Scan/" + nameof(AddChildScans);
 
                 internal const string GetScanInstanceListBy = "api/Scan/" + nameof(GetScanInstanceListBy);
+
+                internal const string SaveScanInstanceOrEditResult = "api/Scan/" + nameof(SaveScanInstanceOrEditResult);
             }
 
 
@@ -46,6 +48,9 @@
             public Task<IEnumerable<ScanInstanceModel>> GetScanInstanceListBy(string resourceName, string asset, bool alsoGetParent, bool alsoGetChilds)
                => RestClient.Instance.GetAsync<IEnumerable<ScanInstanceModel>>($"{KamajiScanActions.GetScanInstanceListBy}?resourceName=" + resourceName 
                    + "&asset=" + asset + "&alsoGetParent=" + alsoGetParent +"&alsoGetChilds=" + alsoGetChilds);
+
+            public Task<int> SaveScanInstanceOrEditResult(ScanInstanceModel model)
+                => RestClient.Instance.PostAsync<int>($"{KamajiScanActions.SaveScanInstanceOrEditResult}", model);
         }
     }
 }

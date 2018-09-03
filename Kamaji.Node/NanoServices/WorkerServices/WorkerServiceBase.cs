@@ -69,8 +69,20 @@
                 scanInstance.Result = JsonConvert.SerializeObject(result.Result);
             else
                 scanInstance.FailedReason = result.FailedReason;
+
+
             //sonra da result' ı kayıt edeceğiz.
-            await KamajiClient.Instance.Scans.SaveScanInstance(scanInstance);
+            switch(this.Model.SaveType)
+            {
+                case ScanModel.ScanSaveType.InsertNew:
+                    await KamajiClient.Instance.Scans.SaveScanInstance(scanInstance);
+                    break;
+                case ScanModel.ScanSaveType.Upsert:
+                    await KamajiClient.Instance.Scans.SaveScanInstanceOrEditResult(scanInstance);
+                    break;
+                default:
+                    throw new NotSupportedException(this.Model.SaveType.ToString());
+            }               
         }
 
 

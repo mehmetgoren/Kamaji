@@ -34,13 +34,6 @@
 
     public sealed class ScanModel
     {
-        public enum ScanType
-        {
-            Simple = 0,
-            NoDelay = 1,
-            Once = 2
-        }
-
         [Flags]
         public enum ScanState
         {
@@ -52,6 +45,19 @@
             Cancelled = 32,//node showdown edilince.
             Completed = 64,//Once' da tamamlanmdığında. Örneğin linkler veya taramalar birince.
             Failed = 128// Hata yüzünden veya max error dan  durdurulunca.
+        }
+
+        public enum ScanType
+        {
+            Simple = 0,
+            NoDelay = 1,
+            Once = 2
+        }
+
+        public enum ScanSaveType
+        {
+            InsertNew = 0,
+            Upsert
         }
 
         public string PrerequisiteName { get; set; }
@@ -66,6 +72,8 @@
 
         public ScanState? State { get; set; }
 
+        public ScanSaveType SaveType { get; set; }
+
         [Range(0, int.MaxValue)]
         public int Period { get; set; }
 
@@ -74,6 +82,8 @@
 
         public int MaxErrorLimit { get; set; } = 10;
 
+
+        public string NodeAddress { get; set; }
     }
 
 

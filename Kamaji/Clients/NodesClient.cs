@@ -32,6 +32,9 @@
             model.Type = scan.Type.Cast<int>().Cast<ScanModel.ScanType>();
             model.PrerequisiteName = prerequisiteName;
             model.ResourceName = scanResourceName;
+            //model.State = scan.State.Cast<int>().Cast<ScanModel.ScanState>();
+            model.SaveType = scan.SaveType.Cast<int>().Cast<ScanModel.ScanSaveType>();
+
 
             return client.PostAsync<int>(NodesActions.AssignScan, model);
         }

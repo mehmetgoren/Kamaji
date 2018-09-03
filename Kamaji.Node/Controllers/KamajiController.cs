@@ -5,7 +5,6 @@
     using Kamaji.Worker;
     using Microsoft.AspNetCore.Mvc;
     using ReliableQueue;
-    using System.Threading;
     using System.Threading.Tasks;
 
     public class KamajiController : ApiController

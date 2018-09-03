@@ -124,9 +124,13 @@
                     entity.State = ScanState.NotStarted;
                     entity.MaxErrorLimit = model.MaxErrorLimit;
                     entity.MaxOperationLimit = model.MaxOperationLimit;
+                    entity.SaveType = model.SaveType.Cast<int>().Cast<ScanSaveType>();
 
                     if (!String.IsNullOrEmpty(model.ResourceName))
                         entity.ScanResourceId = await this.Db.ScanResources.GetScanResourceIdBy(model.ResourceName);
+
+                    if (!String.IsNullOrEmpty(model.NodeAddress))
+                        entity.SelectedNodeId = await this.Db.Nodes.GetIdBy(model.NodeAddress);
 
                     await this.Db.Scans.Save(entity);
                     ret = 1;
@@ -136,6 +140,25 @@
             });
         }
 
+
+        private async Task<(object, object, object)> GetScanIds(ScanInstanceModel model)
+        {
+            object nodeId = await this.Db.Nodes.GetIdBy(model.NodeAddress);//NodeAddress is indexed and unique.
+            if (nodeId == null)
+                throw new InvalidOperationException($"There is no node item for '{model.NodeAddress}' in the database.");
+
+
+            object scanResourceId = await this.Db.ScanResources.GetScanResourceIdBy(model.ResourceName);//ScanResource.Name is indexed and unique
+            if (scanResourceId == null)
+                throw new InvalidOperationException($"There is no ScanResource item which's name is '{model.ResourceName}' in the database.");
+
+
+            object scanId = await this.Db.Scans.GetIdBy(model.Asset, scanResourceId);//Scan.Asset and Scan.ScanResourceId are indexed and unique
+            if (scanId == null)
+                throw new InvalidOperationException($"There is no ScanResource item which's name is '{model.ResourceName}' in the database.");
+
+            return (nodeId, scanResourceId, scanId);
+        }
 
         [HttpPost]
         public Task<IActionResult> SaveScanInstance(ScanInstanceModel model)
@@ -148,23 +171,51 @@
                     IScanInstanceModel entity = this.Db.ModelFactory.CreateScanInstanceModel();
                     entity.CopyPropertiesFrom(model);
 
-                    entity.NodeId = await this.Db.Nodes.GetIdBy(model.NodeAddress);//NodeAddress is indexed and unique.
-                    if (entity.NodeId == null)
-                        throw new InvalidOperationException($"There is no node item for '{model.NodeAddress}' in the database.");
+                    (object nodeId, object scanResourceId, object scanId) = await this.GetScanIds(model);
 
-
-                    object scanResourceId = await this.Db.ScanResources.GetScanResourceIdBy(model.ResourceName);//ScanResource.Name is indexed and unique
-                    if (scanResourceId == null)
-                        throw new InvalidOperationException($"There is no ScanResource item which's name is '{model.ResourceName}' in the database.");
-
-                    entity.ScanId = await this.Db.Scans.GetIdBy(model.Asset, scanResourceId);//Scan.Asset and Scan.ScanResourceId are indexed and unique
-                    if (entity.ScanId == null)
-                        throw new InvalidOperationException($"There is no ScanResource item which's name is '{model.ResourceName}' in the database.");
+                    entity.NodeId = nodeId;
+                    entity.ScanId = scanId;
 
                     await this.Db.ScanInstances.Save(entity);
                     ret = 1;
 
                     ConsoleObserver.Instance.Notify(nameof(ScanController) + "_" + nameof(SaveScanInstance), "A scan result has been got", model);
+                }
+
+                return ret;
+            });
+        }
+
+        [HttpPost]
+        public Task<IActionResult> SaveScanInstanceOrEditResult(ScanInstanceModel model)//edit by ScanId
+        {
+            return this.ResultAsync(async () =>
+            {
+                int ret = 0;
+                if (model.IsModelValid())
+                {
+                    (object nodeId, object scanResourceId, object scanId) = await this.GetScanIds(model);
+
+                    IScanInstanceModel entity = await this.Db.ScanInstances.GetFirstBy(scanId);
+                    if (null != entity)
+                    {
+                        ret = await this.Db.ScanInstances.EditResult(entity.ScanId, nodeId, model.StartTime, model.EndTime, model.Result);
+
+                        ConsoleObserver.Instance.Notify(nameof(ScanController) + "_" + nameof(SaveScanInstance), "A scan result has been edit", model);
+                    }
+                    else
+                    {
+                        entity = this.Db.ModelFactory.CreateScanInstanceModel();
+                        entity.CopyPropertiesFrom(model);
+
+                        entity.NodeId = nodeId;
+                        entity.ScanId = scanId;
+
+                        await this.Db.ScanInstances.Save(entity);
+                        ret = 1;
+
+                        ConsoleObserver.Instance.Notify(nameof(ScanController) + "_" + nameof(SaveScanInstance), "A scan result has been got", model);
+                    }
                 }
 
                 return ret;
@@ -243,6 +294,8 @@
 
                             entity.Type = parent.Type;
                             entity.ScanResourceId = parent.ScanResourceId;
+                            entity.SelectedNodeId = parent.SelectedNodeId;
+                            entity.SaveType = parent.SaveType;
                             entity.ParentId = parent.ScanId;
 
                             childList.Add(entity);

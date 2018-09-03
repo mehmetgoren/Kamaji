@@ -6,8 +6,9 @@
     using Kamaji.Data.Mongo.Models;
     using MongoDB.Bson;
     using MongoDB.Driver;
+    using MongoDB.Driver.Linq;
+    using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
 
     public sealed class ScanInstanceRepository : RepositoryBase, IScanInstanceRepository
@@ -30,7 +31,7 @@
         {
             if (!scanIds.IsEmptyList())
             {
-                var filter = Builders<ScanInstance>.Filter.In(p => p.ScanId, scanIds.Select(p => (ObjectId)p));
+                var filter = Builders<ScanInstance>.Filter.In(p => p.ScanId, System.Linq.Enumerable.Select(scanIds, p => (ObjectId)p));
                 var coll = MongoAdmin.GetCollection<ScanInstance>(this.Db.Database);
                 var find = await coll.FindAsync(filter);
                 return await find.ToListAsync();
@@ -38,5 +39,44 @@
 
             return null;
         }
+
+
+        //needed to be tested.
+        public async Task<int> EditResult(object scanId, object nodeId, DateTime startTime, DateTime? endTime, string result)
+        {
+            if (scanId is ObjectId sid)
+            {
+                var found = await this.Db.ScanInstances.AsQueryable().FirstOrDefaultAsync(p=> p.ScanId == sid);
+                if (null != found)
+                {
+                    //if (nodeId is ObjectId nid)
+                    //{
+                    //    found.NodeId = nid;
+                    //}
+                    //found.StartTime = startTime;
+                    //found.EndTime = endTime;
+                    //found.Result = result;
+
+                    //await this.Db.ScanInstances.ReplaceOrInsertOneAsync(found);
+                    var r = await this.Db.ScanInstances.UpdateOneAsync(found.ScanInstanceId,
+                           (builder) => builder.Set(p => p.NodeId, nodeId).Set(p => p.StartTime, startTime).Set(p => p.EndTime, endTime).Set(p => p.Result, result));
+
+                    return 1;
+                }
+            }
+
+            return 0;
+        }
+
+        public async Task<IScanInstanceModel> GetFirstBy(object scanId)
+        {
+            if (scanId is ObjectId sid)
+            {
+                return await this.Db.ScanInstances.AsQueryable().FirstOrDefaultAsync(p => p.ScanId == sid);
+            }
+
+            return null;
+        }
+
     }
 }

@@ -22,6 +22,12 @@
         Once = 2
     }
 
+    public enum ScanSaveType
+    {
+        InsertNew = 0,
+        Upsert
+    }
+
     public interface IScanModel
     {
         object ScanId { get; set; }
@@ -60,5 +66,7 @@
         /// If a user forces the scan to run on a specific node. 
         /// </summary>
         object SelectedNodeId { get; set; }
+
+        ScanSaveType SaveType { get; set; }
     }
 }
