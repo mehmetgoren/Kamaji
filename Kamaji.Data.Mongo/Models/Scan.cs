@@ -5,7 +5,8 @@
     using MongoDB.Bson;
     using MongoDB.Bson.Serialization.Attributes;
     using System;
-
+    using System.Collections.Generic;
+    using System.Dynamic;
 
     [MongoCollection(Name = "Scan")]
     [MigrationVersion(Migration100.VersionNo)]
@@ -46,10 +47,39 @@
         public ScanSaveType SaveType { get; set; }
 
 
+        public BsonDocument ArgsBson { get; set; }
+
+
         object IScanModel.ScanId { get => this.ScanId; set => this.ScanId = (ObjectId)value; }
         object IScanModel.ParentId { get => this.ParentId; set => this.ParentId = (ObjectId)value; }
         object IScanModel.ScanResourceId { get => this.ScanResourceId; set => this.ScanResourceId = (ObjectId?)value; }
         object IScanModel.LastAssignedNodeId { get => this.LastAssignedNodeId; set => this.LastAssignedNodeId = (ObjectId?)value; }
         object IScanModel.SelectedNodeId { get => this.SelectedNodeId; set => this.SelectedNodeId = (ObjectId?)value; }
+
+        ExpandoObject IScanModel.Args
+        {
+            get
+            {
+                BsonDocument document = this.ArgsBson;
+                if (null != document)
+                {
+                    IDictionary<string, object> dic = new ExpandoObject();
+                    foreach (BsonElement elm in document)
+                        dic.Add(elm.Name, elm.Value.AsString);
+
+                    return (ExpandoObject)dic;
+                }
+
+                return null;
+            }
+            set
+            {
+                BsonDocument document = null;
+                if (null != value)
+                    document = new BsonDocument(value);
+
+                this.ArgsBson = document;
+            }
+        }
     }
 }

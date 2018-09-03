@@ -1,6 +1,7 @@
 ﻿namespace Kamaji.Data.Models
 {
     using System;
+    using System.Dynamic;
 
     [Flags]
     public enum ScanState
@@ -68,5 +69,7 @@
         object SelectedNodeId { get; set; }
 
         ScanSaveType SaveType { get; set; }
+
+        ExpandoObject Args { get; set; }
     }
 }

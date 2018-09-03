@@ -125,6 +125,7 @@
                     entity.MaxErrorLimit = model.MaxErrorLimit;
                     entity.MaxOperationLimit = model.MaxOperationLimit;
                     entity.SaveType = model.SaveType.Cast<int>().Cast<ScanSaveType>();
+                    entity.Args = model.Args;
 
                     if (!String.IsNullOrEmpty(model.ResourceName))
                         entity.ScanResourceId = await this.Db.ScanResources.GetScanResourceIdBy(model.ResourceName);

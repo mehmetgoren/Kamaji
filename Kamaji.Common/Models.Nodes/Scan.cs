@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.Dynamic;
 
     public sealed class ScanPrerequisiteModel
     {
@@ -84,6 +85,8 @@
 
 
         public string NodeAddress { get; set; }
+
+        public ExpandoObject Args { get; set; }
     }
 
 

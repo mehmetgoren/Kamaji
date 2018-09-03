@@ -38,7 +38,7 @@
         public override int MaxErrorLimit { get => this.Model.MaxErrorLimit; set => this.Model.MaxErrorLimit = value; }
 
 
-        protected virtual Task<WorkerResult> RunWorker(ProxyObserver observer, string asset, Worker.IScanRepository repository) => this.Worker.Run(observer, this.Model.Asset, repository, null);//args' ı değiştirmek istersen override et.
+       // protected virtual Task<WorkerResult> RunWorker(ProxyObserver observer, string asset, Worker.IScanRepository repository, ExpandoObject args) => this.Worker.Run(observer, this.Model.Asset, repository, args);//args' ı değiştirmek istersen override et.
 
         //template method pattern
         protected sealed override async Task Execute(IObserver observer, CancellationToken cancellationToken)
@@ -55,7 +55,7 @@
             WorkerResult result;
             try
             {
-                result = await this.RunWorker(ProxyObserver.Create(observer), this.Model.Asset, new ScanRepository(this));
+                result = await this.Worker.Run(ProxyObserver.Create(observer), this.Model.Asset, new ScanRepository(this), this.Model.Args);// this.RunWorker(ProxyObserver.Create(observer), this.Model.Asset, new ScanRepository(this), this.Model.Args);
                 //şimdi buynu gönderelim Kamaji' ye gönderelim. Bakalım onda bir karşılayacı var mı?
                 cancellationToken.ThrowIfCancellationRequested();
             }

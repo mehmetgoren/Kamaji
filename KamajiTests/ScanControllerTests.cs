@@ -3,6 +3,7 @@ namespace KamajiTests
     using Kamaji.Common;
     using Kamaji.Common.Models;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using System.Dynamic;
     using System.IO;
     using System.Threading.Tasks;
 
@@ -98,6 +99,12 @@ namespace KamajiTests
             model.SaveType = ScanModel.ScanSaveType.Upsert;
             model.ResourceName = "TerminalWorker";
             model.Period = 10000;
+
+            dynamic dyn = new ExpandoObject();
+            dyn.userName = "admin";
+            dyn.password = "1";
+            model.Args = dyn;
+
             result = await RestClient.Instance.PostAsync<int>("Scan/SaveScan", model);
 
             Assert.AreEqual(result, 1);
