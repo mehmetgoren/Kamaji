@@ -30,6 +30,7 @@
                 IEnumerable<IScanModel> scanList = await db.Scans.GetListBy(true, ScanState.NotStarted, ScanState.Cancelled);//Buraya parantid null olan da eklenebilir child lar otomatik başlıyorsa
                 if (null != scanList && scanList.Any())
                 {
+                    scanList = scanList.OrderBy(p => p.CreatedDate);
                     foreach (IScanModel scan in scanList)
                     {
                         INodeModel node = await ChoseNode(db, scan);
@@ -58,7 +59,7 @@
                         }
                         else
                         {
-                            scan.Enabled = false;
+                            scan.Enabled = false;//Burası biraz sıkıntılı
                             await OnAssingFailed(db, scan);
                             observer.Notify("ScanQueueService.Execute", $"Warning!!!!... Assigning has been failed. The scan asset: {scan.Asset}.", null);
                         }

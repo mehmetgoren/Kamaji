@@ -87,6 +87,10 @@
         public string NodeAddress { get; set; }
 
         public ExpandoObject Args { get; set; }
+
+        public bool SaveNullResult { get; set; }
+
+        public int MaxInstance { get; set; }
     }
 
 

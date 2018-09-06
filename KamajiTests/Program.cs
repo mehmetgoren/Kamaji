@@ -33,7 +33,7 @@
             try
             {
                 //await new ScanControllerTests().SaveScanPrerequisiteTest();
-                // await new ScanControllerTests().SaveScanResourceTest();
+                 //await new ScanControllerTests().SaveScanResourceTest();
                  await new ScanControllerTests().SaveScanTest();
             }
             catch(Exception ex) {

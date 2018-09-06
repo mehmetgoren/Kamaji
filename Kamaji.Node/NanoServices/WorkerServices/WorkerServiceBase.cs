@@ -12,6 +12,7 @@
     using System.Collections.Generic;
     using ionix.Utils.Reflection;
     using System.Linq;
+    using System.Collections;
 
 
     //task runner' ı da modele göre bu oluştursun. Yalnız o tipleri henüz oluşturmadık. Ya da bir factory ile TaskRunner ve NonaBase karması yapsın.
@@ -70,6 +71,11 @@
             else
                 scanInstance.FailedReason = result.FailedReason;
 
+            if (String.IsNullOrEmpty(result.FailedReason) && (!this.Model.SaveNullResult && IsNullOrEmpty(result.Result)))//Hata olmamış, model null katıda izin vermiyor ve result null gelmiş ise.
+            {
+                this.Notify("Null or empty result was detected and save operation has been canncelled");
+                return;
+            }
 
             //sonra da result' ı kayıt edeceğiz.
             switch(this.Model.SaveType)
@@ -83,6 +89,27 @@
                 default:
                     throw new NotSupportedException(this.Model.SaveType.ToString());
             }               
+        }
+
+        private static bool IsNullOrEmpty(object obj)
+        {
+            if (null != obj)
+            {
+                if (obj is String s)
+                    return s.Length == 0;
+                if (obj is IEnumerable list)
+                {
+                    var enumerator = list.GetEnumerator();
+                    if (null == enumerator)
+                        return true;
+
+                    return !enumerator.MoveNext();
+                }
+
+                return false;
+            }
+
+            return true;
         }
 
 

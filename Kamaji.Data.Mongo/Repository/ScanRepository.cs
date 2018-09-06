@@ -48,26 +48,6 @@
             return null;
         }
 
-        public async Task<object> GetIdBy(string asset, object scanResourceId)
-        {
-            if (String.IsNullOrEmpty(asset) || null == scanResourceId)
-                return null;
-
-            var template = Lookup<Scan>.Left(this.Db.Database)
-                .Project(p => p.ScanId)
-                .Match().Equals(p => p.Asset, asset).And().Equals(p => p.ScanResourceId, scanResourceId).EndMatch()
-                .Limit(1);
-
-            string script = template.ToString();
-
-            var result = await template
-                .ExecuteAsync(d => new {
-                    Scan = d.To<Scan>()
-                });
-
-            return result.FirstOrDefault()?.Scan?.ScanId;
-        }
-
         public async Task<int> Edit(IScanModel model)
         {
             if (null == model)

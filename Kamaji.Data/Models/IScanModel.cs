@@ -71,5 +71,12 @@
         ScanSaveType SaveType { get; set; }
 
         ExpandoObject Args { get; set; }
+
+        bool SaveNullResult { get; set; }
+
+        /// <summary>
+        /// Max result number
+        /// </summary>
+        int MaxInstance { get; set; }
     }
 }

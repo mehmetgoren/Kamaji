@@ -35,7 +35,7 @@
             //model.State = scan.State.Cast<int>().Cast<ScanModel.ScanState>();
             model.SaveType = scan.SaveType.Cast<int>().Cast<ScanModel.ScanSaveType>();
             model.Args = scan.Args;
-
+            model.SaveNullResult = scan.SaveNullResult;
 
             return client.PostAsync<int>(NodesActions.AssignScan, model);
         }

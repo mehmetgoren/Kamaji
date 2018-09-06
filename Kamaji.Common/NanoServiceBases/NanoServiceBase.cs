@@ -28,7 +28,7 @@
             }
 
             this._cancellation = new CancellationTokenSource();
-            this.Observer1 = observer ?? ConsoleObserver.Instance;
+            this.Observer = observer ?? ConsoleObserver.Instance;
             this.Interval = interval;
         }
 
@@ -36,7 +36,7 @@
             : this(checkSingleton, observer, TimeSpan.FromMilliseconds(1000)) { }
 
 
-        private IObserver Observer1 { get; }
+        private IObserver Observer { get; }
 
         public TimeSpan Interval { get; set; }
 
@@ -96,7 +96,7 @@
             {
                 try
                 {
-                    await runner.Run(this.Execute, this.Observer1, token);
+                    await runner.Run(this.Execute, this.Observer, token);
                 }
                 catch (Exception ex)
                 {
@@ -217,7 +217,7 @@
             {
                 NotifyInfo info = this.NotifyInfoProvider();
 
-                this.Observer1?.Notify(info.Key, message, info.Args);
+                this.Observer?.Notify(info.Key, message, info.Args);
             }
             catch(Exception ex)
             {

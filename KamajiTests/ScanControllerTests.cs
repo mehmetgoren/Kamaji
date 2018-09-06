@@ -57,10 +57,16 @@ namespace KamajiTests
             //result = await RestClient.Instance.PostAsync<int>("Scan/SaveScanResource", model);
 
 
+            //model = new ScanResourceModel();
+            //model.Name = "TerminalWorker";
+            //model.Version = "1.0.0";
+            //model.Resources = await File.ReadAllBytesAsync(Utility.GetExecutionPath() + "\\TerminalWorker.zip");
+            //result = await RestClient.Instance.PostAsync<int>("Scan/SaveScanResource", model);
+
             model = new ScanResourceModel();
-            model.Name = "TerminalWorker";
+            model.Name = "Dollars";
             model.Version = "1.0.0";
-            model.Resources = await File.ReadAllBytesAsync(Utility.GetExecutionPath() + "\\TerminalWorker.zip");
+            model.Resources = await File.ReadAllBytesAsync(Utility.GetExecutionPath() + "\\Dollars.zip");
             result = await RestClient.Instance.PostAsync<int>("Scan/SaveScanResource", model);
 
             Assert.AreEqual(result, 1);
@@ -94,17 +100,25 @@ namespace KamajiTests
             //result = await RestClient.Instance.PostAsync<int>("Scan/SaveScan", model);
 
 
+            //model = new ScanModel();
+            //model.Asset = "get-process -ComputerName ANKARA";
+            //model.SaveType = ScanModel.ScanSaveType.Upsert;
+            //model.ResourceName = "TerminalWorker";
+            //model.Period = 10000;
+
+            //dynamic dyn = new ExpandoObject();
+            //dyn.userName = "admin";
+            //dyn.password = "1";
+            //model.Args = dyn;
+
+            //result = await RestClient.Instance.PostAsync<int>("Scan/SaveScan", model);
+
+
             model = new ScanModel();
-            model.Asset = "get-process -ComputerName ANKARA";
-            model.SaveType = ScanModel.ScanSaveType.Upsert;
-            model.ResourceName = "TerminalWorker";
-            model.Period = 10000;
-
-            dynamic dyn = new ExpandoObject();
-            dyn.userName = "admin";
-            dyn.password = "1";
-            model.Args = dyn;
-
+            model.Asset = "it is unnecessary";
+            model.Period = 5000;
+            model.ResourceName = "Dollars";
+            model.MaxInstance = 1000000;
             result = await RestClient.Instance.PostAsync<int>("Scan/SaveScan", model);
 
             Assert.AreEqual(result, 1);

@@ -49,6 +49,10 @@
 
         public BsonDocument ArgsBson { get; set; }
 
+        public bool SaveNullResult { get; set; }
+
+        public int MaxInstance { get; set; }
+
 
         object IScanModel.ScanId { get => this.ScanId; set => this.ScanId = (ObjectId)value; }
         object IScanModel.ParentId { get => this.ParentId; set => this.ParentId = (ObjectId)value; }

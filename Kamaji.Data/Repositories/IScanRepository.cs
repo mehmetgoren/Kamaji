@@ -12,8 +12,6 @@
 
         Task<IScanModel> GetBy(string assset, object scanResourceId);
 
-        Task<object> GetIdBy(string asset, object scanResourceId);
-
         Task<int> Edit(IScanModel model);//to edit stete to asiigned.
 
         Task<int> BatchSave(IEnumerable<IScanModel> scanList);

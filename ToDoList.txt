@@ -25,6 +25,8 @@
 * ScanQueueService' de oluþan assing failed için daha detaylý mesajlar yazýlmalý.
 * Baðlantýsý kopmuþ veya bir sebebten kapanmýþ node' lara atanan görevi yeni node' lara atayacak ikinci bir Kamaji.ScanQueue servisi gerekli. (HeartBeat' den kontrol yapacak.)
 * Arayüzde özellikler baðlanan node' larýn sahip olduklarý Resource' lara göre aktif halde olacak. Db' de daha farklýlarý olsa bile pasif gözükecek.
+* Uygulamada bir de machine-learning modülü olacak ve veri kaynaðý seçilip feature lar çýkarýlacak. Ardýndan da regressin/classfication/clustering ve ann algoritmalrý seçilip
+  model oluþturulacak. kaydedilen model predictionda' da kullanýlabilecek....
 
 
 

@@ -78,5 +78,24 @@
             return null;
         }
 
+        public async Task<int> TrimToSize(object scanId, int max)
+        {
+            int ret = 0;
+            if (max > 0 && scanId is ObjectId id)
+            {
+                while(await this.Db.ScanInstances.AsQueryable().Where(p => p.ScanId == id).CountAsync() > max)
+                {
+                    var first = await this.Db.ScanInstances.AsQueryable().OrderBy(p => p.ScanInstanceId).Take(1).FirstOrDefaultAsync();
+                    if (null != first)
+                    {
+                        await this.Db.ScanInstances.DeleteOneAsync(p => p.ScanInstanceId == first.ScanInstanceId);
+                        ++ret;
+                    }
+                }
+            }
+
+            return ret;
+        }
+
     }
 }
