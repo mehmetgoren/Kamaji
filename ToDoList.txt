@@ -27,7 +27,8 @@
 * Arayüzde özellikler baðlanan node' larýn sahip olduklarý Resource' lara göre aktif halde olacak. Db' de daha farklýlarý olsa bile pasif gözükecek.
 * Uygulamada bir de machine-learning modülü olacak ve veri kaynaðý seçilip feature lar çýkarýlacak. Ardýndan da regressin/classfication/clustering ve ann algoritmalrý seçilip
   model oluþturulacak. kaydedilen model predictionda' da kullanýlabilecek....
-
+* Prereqw ve resource' a createddate ekle.
+* Belirli tarihlerede çalýþacak, örneð,n hafta içi servisler olsun.
 
 
 *Önce WebScan, Process scan, Port Scan(Nmap), OpenVas ve open source diðer web zaafiyet tarayýcý.

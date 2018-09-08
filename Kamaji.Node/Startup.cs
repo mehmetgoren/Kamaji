@@ -5,6 +5,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using System;
     using System.Threading.Tasks;
 
     public class Startup
@@ -27,18 +28,32 @@
         {
             applicationLifetime.ApplicationStopping.Register(() =>
             {
-                foreach (var service in WorkerServiceList.Instance)
+                try
                 {
-                    if (service.IsRunning)
+                    foreach (var service in WorkerServiceList.Instance)
                     {
-                        var model = service.Model;
-                        model.State = Common.Models.ScanModel.ScanState.Cancelled;
+                        if (service.IsRunning)
+                        {
+                            var model = service.Model;
+                            model.State = Common.Models.ScanModel.ScanState.Cancelled;
 
-                        KamajiClient.Instance.Scans.EditScan(model).Wait();
+                            KamajiClient.Instance.Scans.EditScan(model).Wait();
+                        }
                     }
                 }
-                Workers.Instance.Dispose();
+                catch(Exception ex)
+                {
+                     Common.Utility.CreateLogger(nameof(Startup), "ApplicationStopping").Code(512).Error(ex).SaveAsync().Wait();
+                }
 
+                try
+                {
+                    Workers.Instance.Dispose();
+                }
+                catch (Exception ex)
+                {
+                    Common.Utility.CreateLogger(nameof(Startup), "ApplicationStopping").Code(513).Error(ex).SaveAsync().Wait();
+                }
             });
 
             if (env.IsDevelopment())

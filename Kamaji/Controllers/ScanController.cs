@@ -149,8 +149,9 @@
         {
             if (scan.MaxInstance > 0)
             {
-                ConsoleObserver.Instance.Notify(nameof(ScanController) + "_" + nameof(CheckMaxInstance), "Max Instance exceed, first unnecessary records will be removed.", scan);
-                return await this.Db.ScanInstances.TrimToSize(scan.ScanId, scan.MaxInstance);
+                int affected = await this.Db.ScanInstances.TrimToSize(scan.ScanId, scan.MaxInstance);
+                if (affected > 0)
+                    ConsoleObserver.Instance.Notify(nameof(ScanController) + "_" + nameof(CheckMaxInstance), $"Max Instance exceed, total {affected} unnecessary records has been removed.", scan);
             }
             return 0;
         }

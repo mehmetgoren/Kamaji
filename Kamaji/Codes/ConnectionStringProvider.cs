@@ -4,7 +4,7 @@
 
     internal sealed class ConnectionStringProvider : IConnectionStringProvider
     {
-        public string ConnectionString => "mongodb://192.168.70.129:27017";
+        public string ConnectionString => DataSources.Jsons.AppSettings.Config.ConnectionString;
 
         public string DatabaseName => "Kamaji";
     }

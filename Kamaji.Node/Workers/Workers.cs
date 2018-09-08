@@ -72,7 +72,14 @@
         {
             foreach (var worker in this._workers.Values)
             {
-                worker.Dispose();
+                try
+                {
+                    worker.Dispose();
+                }
+                catch(Exception ex)
+                {
+                    Common.Utility.CreateLogger(nameof(Workers), nameof(Dispose)).Code(514).Error(ex).SaveAsync().Wait();
+                }
             }
         }
     }

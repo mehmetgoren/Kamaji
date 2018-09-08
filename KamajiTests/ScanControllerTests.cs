@@ -66,6 +66,7 @@ namespace KamajiTests
             model = new ScanResourceModel();
             model.Name = "Dollars";
             model.Version = "1.0.0";
+            model.ScanPrerequisiteName = "puppeteer";
             model.Resources = await File.ReadAllBytesAsync(Utility.GetExecutionPath() + "\\Dollars.zip");
             result = await RestClient.Instance.PostAsync<int>("Scan/SaveScanResource", model);
 
@@ -81,20 +82,20 @@ namespace KamajiTests
 
             //model = new ScanModel();
             //model.Asset = "https://www.w3.org/";
-            //model.Period = 30000;
+            //model.Period = 5000;
             //model.ResourceName = "WebPageHtmlSource";
             //result = await RestClient.Instance.PostAsync<int>("Scan/SaveScan", model);
 
 
             //model = new ScanModel();
             //model.Asset = "https://odatv.com/";
-            //model.Period = 30000;
+            //model.Period = 13000;
             //model.ResourceName = "WebPageScreenshotWorker";
             //result = await RestClient.Instance.PostAsync<int>("Scan/SaveScan", model);
 
 
             //model = new ScanModel();
-            //model.Asset = "https://demos.telerik.com/aspnet-mvc/tripxpert/";//"http://toastytech.com/evil/";
+            //model.Asset =  "https://demos.telerik.com/aspnet-mvc/tripxpert/";//"http://toastytech.com/evil/";
             //model.Type = ScanModel.ScanType.Once;
             //model.ResourceName = "WebPageSpider";
             //result = await RestClient.Instance.PostAsync<int>("Scan/SaveScan", model);
@@ -115,10 +116,10 @@ namespace KamajiTests
 
 
             model = new ScanModel();
-            model.Asset = "it is unnecessary";
+            model.Asset = "Dollars";
             model.Period = 5000;
             model.ResourceName = "Dollars";
-            model.MaxInstance = 1000000;
+            //model.MaxInstance = 1000000;
             result = await RestClient.Instance.PostAsync<int>("Scan/SaveScan", model);
 
             Assert.AreEqual(result, 1);

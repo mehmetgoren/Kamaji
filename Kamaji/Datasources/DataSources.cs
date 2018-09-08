@@ -34,6 +34,18 @@
                         }
                     }
 
+                    public static string ConnectionString
+                    {
+                        get
+                        {
+                            string value = File[$"{nameof(Config)}:{nameof(ConnectionString)}"];
+                            if (String.IsNullOrEmpty(value))
+                                throw new InvalidOperationException("No Connection string found on appsettings");
+
+                            return value;
+                        }
+                    }
+
                     public static string KamajiDataPath
                     {
                         get
