@@ -45,7 +45,7 @@
                 if (null != value)
                 {
                     string executionPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);//Eğer Common' u eklersen bunu Utility' ye getir.
-                    string filePath = executionPath + "\\ExternalResources";
+                    string filePath = executionPath + $"\\{nameof(ScanPrerequisite)}s";
                     if (!Directory.Exists(filePath))
                         Directory.CreateDirectory(filePath);
 

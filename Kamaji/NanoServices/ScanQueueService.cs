@@ -27,7 +27,7 @@
         {
             using (IKamajiContext db = DI.Provider.GetService<IKamajiContext>())
             {
-                IEnumerable<IScanModel> scanList = await db.Scans.GetListBy(true, ScanState.NotStarted, ScanState.Cancelled);//Buraya parantid null olan da eklenebilir child lar otomatik başlıyorsa
+                IEnumerable<IScanModel> scanList = await db.Scans.GetListBy(true, ScanState.NotStarted, ScanState.Cancelled, ScanState.AssignFailed);//Buraya parantid null olan da eklenebilir child lar otomatik başlıyorsa
                 if (null != scanList && scanList.Any())
                 {
                     scanList = scanList.OrderBy(p => p.CreatedDate);
@@ -52,6 +52,7 @@
                                 }
                                 else
                                 {
+                                    scan.State = ScanState.AssignFailed;
                                     await OnAssingFailed(db, scan);
                                     observer.Notify("ScanQueueService.Execute", $"Warning!!!!. A {scan.Asset} of {scanResource.Name} job couldn't assign to a node which name  is '{node.Address}'.", null);
                                 }
@@ -59,7 +60,8 @@
                         }
                         else
                         {
-                            scan.Enabled = false;//Burası biraz sıkıntılı
+                            // scan.Enabled = false;//Burası biraz sıkıntılı
+                            scan.State = ScanState.AssignFailed;
                             await OnAssingFailed(db, scan);
                             observer.Notify("ScanQueueService.Execute", $"Warning!!!!... Assigning has been failed. The scan asset: {scan.Asset}.", null);
                         }

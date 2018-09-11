@@ -32,6 +32,23 @@
             return scan;
         }
 
+
+        //http://192.168.0.21:1000/api/Test/GetResult?resourceName=nmap_windows&asset=-PS 127.0.0.1
+        [HttpGet]
+        public async Task<IActionResult> GetResult(string resourceName, string asset)
+        {
+            object ret = null;
+            if (!String.IsNullOrEmpty(resourceName) && !String.IsNullOrEmpty(asset))
+            {
+                List<object> scanIdList = new List<object>();
+                IScanModel scan = await this.GetScanBy(resourceName, asset);
+                scanIdList.Add(scan.ScanId);
+
+                ret = await this.Db.ScanInstances.GetListBy(new[] { scan.ScanId });
+            }
+            return Json(ret);
+        }
+
         //http://192.168.0.21:1000/api/Test/Spider?resourceName=WebPageSpider&asset=http://toastytech.com/evil/
         [HttpGet]
         public async Task<IActionResult> Spider(string resourceName, string asset)

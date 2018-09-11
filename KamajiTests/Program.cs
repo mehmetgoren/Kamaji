@@ -33,10 +33,11 @@
             try
             {
                 //await new ScanControllerTests().SaveScanPrerequisiteTest();
-                 //await new ScanControllerTests().SaveScanResourceTest();
-                 await new ScanControllerTests().SaveScanTest();
+                await new ScanControllerTests().SaveScanResourceTest();
+                await new ScanControllerTests().SaveScanTest();
             }
-            catch(Exception ex) {
+            catch (Exception ex)
+            {
                 Console.WriteLine("Not Ok!!!... " + ex.Message);
                 return;
             }

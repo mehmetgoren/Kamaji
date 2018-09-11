@@ -28,7 +28,8 @@
 * Uygulamada bir de machine-learning modülü olacak ve veri kaynaðý seçilip feature lar çýkarýlacak. Ardýndan da regressin/classfication/clustering ve ann algoritmalrý seçilip
   model oluþturulacak. kaydedilen model predictionda' da kullanýlabilecek....
 * Prereqw ve resource' a createddate ekle.
-* Belirli tarihlerede çalýþacak, örneð,n hafta içi servisler olsun.
+* Belirli tarihlerede çalýþacak, örneð,n hafta içi servisler olsun. Burasý scheduler time olacak. Haftanýn günlerini flag enum ile alacak ve o tarihte çalýþtýracak.
+	Bir de bunun için de  kamaji' de ayrý bir scanqueue servisi olacak ve o da zamaný gelen servcisleri çalýþtýracak. Standart olan ise schedule time' ý verilewnleri seçmeyecek.
 
 
 *Önce WebScan, Process scan, Port Scan(Nmap), OpenVas ve open source diðer web zaafiyet tarayýcý.

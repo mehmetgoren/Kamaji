@@ -3,7 +3,6 @@ namespace KamajiTests
     using Kamaji.Common;
     using Kamaji.Common.Models;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using System.Dynamic;
     using System.IO;
     using System.Threading.Tasks;
 
@@ -13,14 +12,15 @@ namespace KamajiTests
         [TestMethod]
         public async Task SaveScanPrerequisiteTest()
         {
+            int result = 0;
             await RestClient.Instance.SignIn();
+            ScanPrerequisiteModel model;
 
-            ScanPrerequisiteModel model = new ScanPrerequisiteModel();
+            model = new ScanPrerequisiteModel();
             model.Name = "puppeteer";
             model.Version = "1.0.0";
             model.Resources = await File.ReadAllBytesAsync(Utility.GetExecutionPath() + "\\puppeteer_1.4.0&express_4.16.3.zip");
-
-            int result = await RestClient.Instance.PostAsync<int>("Scan/SaveScanPrerequisite", model);
+            result = await RestClient.Instance.PostAsync<int>("Scan/SaveScanPrerequisite", model);
 
             Assert.AreEqual(result, 1);
         }
@@ -63,11 +63,18 @@ namespace KamajiTests
             //model.Resources = await File.ReadAllBytesAsync(Utility.GetExecutionPath() + "\\TerminalWorker.zip");
             //result = await RestClient.Instance.PostAsync<int>("Scan/SaveScanResource", model);
 
+            //model = new ScanResourceModel();
+            //model.Name = "Dollars";
+            //model.Version = "1.0.0";
+            //model.ScanPrerequisiteName = "puppeteer";
+            //model.Resources = await File.ReadAllBytesAsync(Utility.GetExecutionPath() + "\\Dollars.zip");
+            //result = await RestClient.Instance.PostAsync<int>("Scan/SaveScanResource", model);
+
             model = new ScanResourceModel();
-            model.Name = "Dollars";
+            model.Name = "nmap_windows";
             model.Version = "1.0.0";
-            model.ScanPrerequisiteName = "puppeteer";
-            model.Resources = await File.ReadAllBytesAsync(Utility.GetExecutionPath() + "\\Dollars.zip");
+           // model.ScanPrerequisiteName = "nmap_windows";
+            model.Resources = await File.ReadAllBytesAsync(Utility.GetExecutionPath() + "\\NmapWorker.zip");
             result = await RestClient.Instance.PostAsync<int>("Scan/SaveScanResource", model);
 
             Assert.AreEqual(result, 1);
@@ -115,11 +122,17 @@ namespace KamajiTests
             //result = await RestClient.Instance.PostAsync<int>("Scan/SaveScan", model);
 
 
+            //model = new ScanModel();
+            //model.Asset = "Dollars";
+            //model.Period = 5000;
+            //model.ResourceName = "Dollars";
+            ////model.MaxInstance = 1000000;
+            //result = await RestClient.Instance.PostAsync<int>("Scan/SaveScan", model);
+
             model = new ScanModel();
-            model.Asset = "Dollars";
-            model.Period = 5000;
-            model.ResourceName = "Dollars";
-            //model.MaxInstance = 1000000;
+            model.Asset = "-PS 127.0.0.1";
+            model.Period = 10000;
+            model.ResourceName = "nmap_windows";
             result = await RestClient.Instance.PostAsync<int>("Scan/SaveScan", model);
 
             Assert.AreEqual(result, 1);
