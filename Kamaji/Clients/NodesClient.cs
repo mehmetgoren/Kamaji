@@ -4,6 +4,7 @@
     using ionix.Utils.Reflection;
     using Kamaji.Common.Models;
     using Kamaji.Data.Models;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     public sealed class NodesClient
@@ -18,9 +19,12 @@
         {
             internal const string AssignScan = "api/Kamaji/" + nameof(AssignScan);
             internal const string StopService = "api/Kamaji/" + nameof(StopService);
+
+            internal const string GetOfflineData = "api/Kamaji/" + nameof(GetOfflineData);
+            internal const string DeleteOfflineData = "api/Kamaji/" + nameof(DeleteOfflineData);
         }
 
-       // işte şimdi node' a scan leri göndermemiz için bu çift raraflı dublex' i kullanacağız.
+        // işte şimdi node' a scan leri göndermemiz için bu çift raraflı dublex' i kullanacağız.
 
         public Task<int> AssignScan(INodeModel node, string prerequisiteName, string scanResourceName, IScanModel scan)
         {
@@ -47,5 +51,12 @@
 
             return client.GetAsync<bool>(NodesActions.StopService + "?resourceName=" + resourceName + "&asset=" + asset);
         }
+
+
+        public Task<IEnumerable<OfflineDataModel>> GetOfflineData(string nodeAddress)
+            => new RestClient(nodeAddress).GetAsync<IEnumerable<OfflineDataModel>>(NodesActions.GetOfflineData);
+
+        public Task<int> DeleteOfflineData(string nodeAddress, int id)
+            => new RestClient(nodeAddress).GetAsync<int>(NodesActions.DeleteOfflineData + "?id=" + id);
     }
 }

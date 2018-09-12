@@ -124,4 +124,18 @@
         [Required]
         public IEnumerable<ScanModel> Childs { get; set; }
     }
+
+
+    public sealed class OfflineDataModel
+    {
+        public int Id { get; set; }
+
+        public DateTime OfflineDate { get; set; } = DateTime.Now;
+
+        public string Error { get; set; }
+
+        public string Operation { get; set; }
+
+        public string Json { get; set; }
+    }
 }

@@ -51,7 +51,7 @@
                 }
                 catch(Exception ex)
                 {
-                    await OfflineModel.From(model, nameof(SaveScanInstance), ex).SaveAsync();
+                    await OfflineData.From(model, nameof(SaveScanInstance), ex).SaveAsync();
                     return -1;
                 }
             }
@@ -64,7 +64,7 @@
                 }
                 catch (Exception ex)
                 {
-                    await OfflineModel.From(model, nameof(SaveScanInstanceOrEditResult), ex).SaveAsync();
+                    await OfflineData.From(model, nameof(SaveScanInstanceOrEditResult), ex).SaveAsync();
                     return -1;
                 }
             }
@@ -78,7 +78,7 @@
                 }
                 catch(Exception ex)
                 {
-                    await OfflineModel.From(model, nameof(EditScan), ex).SaveAsync();
+                    await OfflineData.From(model, nameof(EditScan), ex).SaveAsync();
                     return -1;
                 }
             }
@@ -91,7 +91,7 @@
                 }
                 catch(Exception ex)
                 {
-                    await OfflineModel.From(model, nameof(EditScan), ex).SaveAsync();
+                    await OfflineData.From(model, nameof(EditScan), ex).SaveAsync();
                     return -1;
                 }
             }

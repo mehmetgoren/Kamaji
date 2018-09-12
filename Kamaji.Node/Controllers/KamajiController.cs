@@ -2,6 +2,7 @@
 {
     using Kamaji.Common;
     using Kamaji.Common.Models;
+    using Kamaji.Node.Offline;
     using Kamaji.Worker;
     using Microsoft.AspNetCore.Mvc;
     using ReliableQueue;
@@ -89,5 +90,13 @@
                 return false;
             }, msg);
         }
+
+        [HttpGet]
+        public Task<IActionResult> GetOfflineData()
+            => this.ResultAsync(OfflineData.GetOfflineData);
+
+        [HttpGet]
+        public Task<IActionResult> DeleteOfflineData(int id)
+            => this.ResultAsync(() => OfflineData.Delete(id));
     }
 }

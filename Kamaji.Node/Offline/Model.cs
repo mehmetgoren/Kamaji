@@ -11,12 +11,12 @@
 
 
     [MigrationVersion(Migration100.VersionNo)]
-    [Table(nameof(OfflineModel))]
-    internal sealed class OfflineModel
+    [Table(nameof(OfflineData))]
+    internal sealed class OfflineData
     {
-        internal static OfflineModel From(object model, string operation, Exception ex)
+        internal static OfflineData From(object model, string operation, Exception ex)
         {
-            OfflineModel ret = new OfflineModel();
+            OfflineData ret = new OfflineData();
             ret.Json = JsonConvert.SerializeObject(model);
             ret.Operation = operation;
             ret.Error = ex.FindRoot()?.Message;
@@ -46,21 +46,28 @@
             return ret;
         }
 
-        internal static async Task<IEnumerable<T>> GetOfflineData<T>(string operation)
+        internal static async Task<IEnumerable<OfflineData>> GetOfflineData()
         {
-            List<T> ret = new List<T>();
+            List<OfflineData> ret = new List<OfflineData>();
             using (var db = ionixFactory.CreateDbClient())
             {
-                var modelList = await db.Cmd.QueryAsync<OfflineModel>("select * from OfflineModel t where t.Operation=@0 order by t.Id".ToQuery(operation));
-                foreach(OfflineModel model in modelList)
-                {
-                    if (!String.IsNullOrEmpty(model.Json))
-                    {
-                        ret.Add(JsonConvert.DeserializeObject<T>(model.Json));
-                    }
-                }
+                ret.AddRange(await db.Cmd.QueryAsync<OfflineData>("select * from OfflineData t order by t.Id".ToQuery()));
             }
             return ret;
+        }
+
+        internal static async Task<int> Delete(int id)
+        {
+            if (id > 0)
+            {
+                using (var db = ionixFactory.CreateDbClient())
+                {
+                    OfflineData entity = new OfflineData { Id = id };
+                    await db.Cmd.DeleteAsync(entity);
+                }
+            }
+
+            return 0;
         }
     }
 }

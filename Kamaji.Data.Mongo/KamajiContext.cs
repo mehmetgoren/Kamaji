@@ -5,6 +5,7 @@
     using Microsoft.Extensions.DependencyInjection;
     using Kamaji.Data.Models;
     using Models;
+    using System.Threading.Tasks;
 
     public sealed class KamajiModelFactory : IKamajiModelFactory
     {
@@ -51,7 +52,7 @@
         }
 
         public override IKamajiModelFactory ModelFactory => KamajiModelFactory.Instance;
-        public override DateTime GetDbDateTime() => this.Db.HostInfo()?.System?.CurrentTime ?? DateTime.Now;
+        public override async Task<DateTime> GetDbDateTime() => (await this.Db.HostInfoAsync())?.System?.CurrentTime ?? DateTime.Now;
 
 
 

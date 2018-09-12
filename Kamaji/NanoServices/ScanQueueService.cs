@@ -108,7 +108,7 @@
                     return availebleCpu * threatCount * availableMem / Math.Max(node.TotalExecutingJobCount + node.TotalQueuedJobCount, 1.0);
                 }
 
-                DateTime dbDate = db.GetDbDateTime();
+                DateTime dbDate = await db.GetDbDateTime();
                 nodes = nodes.Where(p => p.LastConnectionTime.AddSeconds(10) > dbDate);//get all nodes that lives. Bu 10 saniyeyi config' e taşı.
                 //direk node' lara söylememiz lazım kaç adet task ları olduğunu. hem böylece multi-task scan' leri de daha iyi yakalayabiliriz.
                 if (nodes.Any())

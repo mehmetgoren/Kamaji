@@ -4,6 +4,7 @@
     using MongoDB.Driver;
     using ionix.Data.Mongo;
     using Kamaji.Data.Mongo.Models;
+    using System.Threading.Tasks;
 
     public sealed class DbContext
     {
@@ -27,10 +28,7 @@
             this._authes = this.GetLazy<Auth>();
         }
 
-        public HostInfo HostInfo()
-        {
-            return MongoAdmin.GetHostInfo(this.Database);
-        }
+        public Task<HostInfo> HostInfoAsync() => MongoAdmin.GetHostInfoAsync(this.Database);
 
 
         private Lazy<MongoRepository<TEntity>> GetLazy<TEntity>()

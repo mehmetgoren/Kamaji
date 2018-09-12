@@ -1,7 +1,5 @@
 ﻿namespace Kamaji.Data.Mongo
 {
-    using ionix.Data.Mongo;
-    using ionix.Data.Mongo.Serializers;
     using Kamaji.Data.Models;
     using Kamaji.Data.Mongo.Models;
     using MongoDB.Bson;

@@ -43,7 +43,6 @@
                                 arr = token.Split(' ');
                                 if (arr.Length == 2 || arr[0] == "Token")//you can later optimize the codes below using cache machanics.
                                 {
-
                                     string tokenValue = Serializer.FromBase64(arr[1]);
                                     Guid guid;
                                     if (Guid.TryParse(tokenValue, out guid))

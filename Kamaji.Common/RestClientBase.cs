@@ -6,6 +6,7 @@
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
+    using ionix.Utils.Extensions;
     using Newtonsoft.Json;
 
     public abstract class RestClientBase
@@ -36,7 +37,7 @@
                         var result =  JsonConvert.DeserializeObject<RestClientBase.ResponseModel<T>>(json);
                         if (result.Error != null)
                         {
-                            await Utility.CreateLogger(nameof(RestClientBase), nameof(GetAsync)).Code(3).Error(result.Error).SaveAsync();
+                            await Utility.CreateLogger(nameof(RestClientBase), nameof(GetAsync)).Code(3).Error(result.Error + " on " + url).SaveAsync();
                         }
                         return result.Data;
                     }
@@ -44,7 +45,7 @@
             }
             catch (Exception ex)
             {
-                await Utility.CreateLogger(nameof(RestClientBase), nameof(GetAsync)).Code(2).Error(ex).SaveAsync();
+                await Utility.CreateLogger(nameof(RestClientBase), nameof(GetAsync)).Code(2).Error(ex.FindRoot().Message + " on " + url).SaveAsync();
                 throw;
             }
         }
@@ -69,7 +70,7 @@
                         var result = JsonConvert.DeserializeObject<RestClientBase.ResponseModel<T>>(json);
                         if (result.Error != null)
                         {
-                            await Utility.CreateLogger(nameof(RestClientBase), nameof(PostAsync)).Code(3).Error(result.Error).SaveAsync();
+                            await Utility.CreateLogger(nameof(RestClientBase), nameof(PostAsync)).Code(3).Error(result.Error + " on " + url).SaveAsync();
                         }
                         return result.Data;
                     }
@@ -77,7 +78,7 @@
             }
             catch (Exception ex)
             {
-                await Utility.CreateLogger(nameof(RestClientBase), nameof(PostAsync)).Code(2).Error(ex).SaveAsync();
+                await Utility.CreateLogger(nameof(RestClientBase), nameof(PostAsync)).Code(2).Error(ex.FindRoot().Message + " on " + url).SaveAsync();
                 throw;
             }
         }

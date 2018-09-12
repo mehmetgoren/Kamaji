@@ -2,12 +2,14 @@
 {
     using System;
     using System.Threading.Tasks;
+    using ionix.Utils.Extensions;
     using ionix.Utils.Reflection;
     using Kamaji.Common;
     using Kamaji.Common.Models;
     using Kamaji.Data;
     using Kamaji.Data.Models;
     using Microsoft.AspNetCore.Mvc;
+    using Newtonsoft.Json;
 
     public sealed class NodeController : ApiControllerBase
     {
@@ -60,6 +62,8 @@
 
                     NodeResourceUsages.Instance.Get(model.Address)?.Reset();
 
+                    _=this.HandleOfflineData(node.Address);
+
                     ret = true;
 
                     if (!_hasAny)
@@ -71,6 +75,62 @@
 
                 return ret;
             });
+        }
+
+        private async Task HandleOfflineData(string nodeAddress)
+        {
+            ScanWorks scan = new ScanWorks(this.Db);
+            var offlineDataList = await NodesClient.Instance.GetOfflineData(nodeAddress);
+            if (!offlineDataList.IsEmptyList())
+            {
+                foreach (var offline in offlineDataList)
+                {
+                    if (!String.IsNullOrEmpty(offline.Operation) && !String.IsNullOrEmpty(offline.Json))
+                    {
+                        try
+                        {
+                            switch (offline.Operation)
+                            {
+                                case "SaveScanInstance":
+                                    ScanInstanceModel sim = JsonConvert.DeserializeObject<ScanInstanceModel>(offline.Json);
+                                    await scan.SaveScanInstance(sim);
+                                    break;
+                                case "SaveScanInstanceOrEditResult":
+                                    ScanInstanceModel sim2 = JsonConvert.DeserializeObject<ScanInstanceModel>(offline.Json);
+                                    await scan.SaveScanInstanceOrEditResult(sim2);
+                                    break;
+                                case "EditScan"://Burası kuyruğa eklendiği için iptal edildçi.
+                                    //ScanModel sm = JsonConvert.DeserializeObject<ScanModel>(offline.Json);
+                                    //  await scan.EditScan(sm);
+                                    break;
+                                case "AddChildScans":
+                                    AddChildScansModel asm = JsonConvert.DeserializeObject<AddChildScansModel>(offline.Json);
+                                    await scan.AddChildScans(asm);
+                                    break;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            var logger = Utility.CreateLogger(nameof(HandleOfflineData), nameof(HandleOfflineData)).Code(468);
+                            await logger.Error(ex.FindRoot() ?? ex).SaveAsync();
+                            ConsoleObserver.Instance.Notify(nameof(HandleOfflineData), nameof(HandleOfflineData), ex);
+                        }
+                    }
+
+                    try
+                    {
+                        if (offline.Id > 0)
+                            await NodesClient.Instance.DeleteOfflineData(nodeAddress, offline.Id);
+                    }
+                    catch (Exception ex)
+                    {
+                        var logger = Utility.CreateLogger(nameof(HandleOfflineData), nameof(HandleOfflineData)).Code(467);
+                        await logger.Error(ex.FindRoot() ?? ex).SaveAsync();
+                        ConsoleObserver.Instance.Notify(nameof(HandleOfflineData), nameof(HandleOfflineData), ex);
+
+                    }
+                }
+            }
         }
 
 
@@ -112,9 +172,9 @@
         }
 
         [HttpGet]
-        public IActionResult DbDateTime()
+        public Task<IActionResult> DbDateTime()
         {
-            return this.Result(this.Db.GetDbDateTime);
+            return this.ResultAsync(this.Db.GetDbDateTime);
         }
     }
 }

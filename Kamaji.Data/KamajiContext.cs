@@ -2,6 +2,7 @@
 {
     using Kamaji.Data.Models;
     using System;
+    using System.Threading.Tasks;
 
     public interface IKamajiModelFactory
     {
@@ -25,7 +26,7 @@
 
 
         IKamajiModelFactory ModelFactory { get; }
-        DateTime GetDbDateTime();
+        Task<DateTime> GetDbDateTime();
 
 
         IAuthRepository Authes { get; }
@@ -47,7 +48,7 @@
 
 
         public abstract IKamajiModelFactory ModelFactory { get; }
-        public abstract DateTime GetDbDateTime();
+        public abstract Task<DateTime> GetDbDateTime();
 
 
 
