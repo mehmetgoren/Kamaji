@@ -1,6 +1,8 @@
 ﻿namespace Kamaji.Node
 {
     using Kamaji.Common.Models;
+    using Kamaji.Node.Offline;
+    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
@@ -36,21 +38,63 @@
             public Task<ScanResourceModel> GetScanResourceBy(string scanResourceName)
                 => RestClient.Instance.GetAsync<ScanResourceModel>($"{KamajiScanActions.GetScanResourceBy}?name=" + scanResourceName);
 
-            public Task<int> SaveScanInstance(ScanInstanceModel model)
-                => RestClient.Instance.PostAsync<int>($"{KamajiScanActions.SaveScanInstance}", model);
-
-            public Task<int> EditScan(ScanModel model)
-                => RestClient.Instance.PostAsync<int>($"{KamajiScanActions.EditScan}", model);
-
-            public Task<int> AddChildScans(AddChildScansModel model)
-                => RestClient.Instance.PostAsync<int>($"{KamajiScanActions.AddChildScans}", model);
-
             public Task<IEnumerable<ScanInstanceModel>> GetScanInstanceListBy(string resourceName, string asset, bool alsoGetParent, bool alsoGetChilds)
                => RestClient.Instance.GetAsync<IEnumerable<ScanInstanceModel>>($"{KamajiScanActions.GetScanInstanceListBy}?resourceName=" + resourceName 
                    + "&asset=" + asset + "&alsoGetParent=" + alsoGetParent +"&alsoGetChilds=" + alsoGetChilds);
 
-            public Task<int> SaveScanInstanceOrEditResult(ScanInstanceModel model)
-                => RestClient.Instance.PostAsync<int>($"{KamajiScanActions.SaveScanInstanceOrEditResult}", model);
+
+            public async Task<int> SaveScanInstance(ScanInstanceModel model)
+            {
+                try
+                {
+                    return await RestClient.Instance.PostAsync<int>($"{KamajiScanActions.SaveScanInstance}", model);
+                }
+                catch(Exception ex)
+                {
+                    await OfflineModel.From(model, nameof(SaveScanInstance), ex).SaveAsync();
+                    return -1;
+                }
+            }
+
+            public async Task<int> SaveScanInstanceOrEditResult(ScanInstanceModel model)
+            {
+                try
+                {
+                    return await RestClient.Instance.PostAsync<int>($"{KamajiScanActions.SaveScanInstanceOrEditResult}", model);
+                }
+                catch (Exception ex)
+                {
+                    await OfflineModel.From(model, nameof(SaveScanInstanceOrEditResult), ex).SaveAsync();
+                    return -1;
+                }
+            }
+
+
+            public async Task<int> EditScan(ScanModel model)
+            {
+                try
+                {
+                    return await RestClient.Instance.PostAsync<int>($"{KamajiScanActions.EditScan}", model);
+                }
+                catch(Exception ex)
+                {
+                    await OfflineModel.From(model, nameof(EditScan), ex).SaveAsync();
+                    return -1;
+                }
+            }
+
+            public async Task<int> AddChildScans(AddChildScansModel model)
+            {
+                try
+                {
+                    return await RestClient.Instance.PostAsync<int>($"{KamajiScanActions.AddChildScans}", model);
+                }
+                catch(Exception ex)
+                {
+                    await OfflineModel.From(model, nameof(EditScan), ex).SaveAsync();
+                    return -1;
+                }
+            }
         }
     }
 }

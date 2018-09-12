@@ -11,7 +11,7 @@
         private NodeHeartBeatService()
             :base(true, ConsoleObserver.Instance, TimeSpan.FromSeconds(5))
         {
-
+            this.MaxErrorLimit = 0;
         }
 
         protected override ITaskRunner CreateTaskRunner() => SimpleTaskRunner.Instance;

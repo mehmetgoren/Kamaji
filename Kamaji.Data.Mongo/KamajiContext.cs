@@ -3,13 +3,8 @@
     using MongoDB.Bson;
     using System;
     using Microsoft.Extensions.DependencyInjection;
-    using MongoDB.Driver;
-    using MongoDB.Driver.Linq;
     using Kamaji.Data.Models;
     using Models;
-    using System.Threading.Tasks;
-    using System.Collections.Generic;
-    using ionix.Data.Mongo;
 
     public sealed class KamajiModelFactory : IKamajiModelFactory
     {
@@ -56,7 +51,7 @@
         }
 
         public override IKamajiModelFactory ModelFactory => KamajiModelFactory.Instance;
-        public override DateTime GetDbDateTime() => this.Db.HostInfo()?.System?.CurrentTime ?? DateTime.MinValue;
+        public override DateTime GetDbDateTime() => this.Db.HostInfo()?.System?.CurrentTime ?? DateTime.Now;
 
 
 

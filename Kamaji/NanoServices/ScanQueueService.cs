@@ -17,7 +17,7 @@
         private ScanQueueService()
             : base(true,ConsoleObserver.Instance, TimeSpan.FromSeconds(1))
         {
-
+            this.MaxErrorLimit = 0;
         }
 
         protected override ITaskRunner CreateTaskRunner() => SimpleTaskRunner.Instance;
@@ -27,7 +27,7 @@
         {
             using (IKamajiContext db = DI.Provider.GetService<IKamajiContext>())
             {
-                IEnumerable<IScanModel> scanList = await db.Scans.GetListBy(true, ScanState.NotStarted, ScanState.Cancelled, ScanState.AssignFailed);//Buraya parantid null olan da eklenebilir child lar otomatik başlıyorsa
+                IEnumerable<IScanModel> scanList = await db.Scans.GetListBy(true, ScanState.NotStarted, ScanState.NodeShutdown, ScanState.AssignFailed);//Buraya parantid null olan da eklenebilir child lar otomatik başlıyorsa
                 if (null != scanList && scanList.Any())
                 {
                     scanList = scanList.OrderBy(p => p.CreatedDate);

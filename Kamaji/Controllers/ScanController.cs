@@ -31,6 +31,7 @@
                 {
                     IScanPrerequisiteModel entity = this.Db.ModelFactory.CreateScanPrerequisiteModel();
                     entity.CopyPropertiesFrom(model);
+                    entity.CreatedDate = this.Db.GetDbDateTime();
 
                     await this.Db.ScanPrerequisites.Save(entity);
                     ret = 1;
@@ -73,6 +74,7 @@
                 {
                     IScanResourceModel entity = this.Db.ModelFactory.CreateScanResourceModel();
                     entity.CopyPropertiesFrom(model);
+                    entity.CreatedDate = this.Db.GetDbDateTime();
 
                     if (!String.IsNullOrEmpty(model.ScanPrerequisiteName))
                         entity.ScanPrerequisiteId = await this.Db.ScanPrerequisites.GetScanPrerequisiteId(model.ScanPrerequisiteName);//a scan may not have an prerequest.
@@ -119,7 +121,7 @@
                     IScanModel entity = this.Db.ModelFactory.CreateScanModel();
                     entity.Asset = model.Asset;
                     entity.Type = model.Type.Cast<int>().Cast<ScanType>();
-                    entity.CreatedDate = DateTime.Now;
+                    entity.CreatedDate = this.Db.GetDbDateTime();
                     entity.Enabled = true;
                     entity.Period = model.Period;
                     entity.State = ScanState.NotStarted;

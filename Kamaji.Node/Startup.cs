@@ -35,7 +35,7 @@
                         if (service.IsRunning)
                         {
                             var model = service.Model;
-                            model.State = Common.Models.ScanModel.ScanState.Cancelled;
+                            model.State = Common.Models.ScanModel.ScanState.NodeShutdown;
 
                             KamajiClient.Instance.Scans.EditScan(model).Wait();
                         }
@@ -65,6 +65,7 @@
             app.UseMvc();
 
             StartNanoServices();
+            Offline.ionixFactory.InitMigration();
         }
 
         private static void StartNanoServices()

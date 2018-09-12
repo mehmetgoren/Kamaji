@@ -9,6 +9,8 @@
 
         object ScanPrerequisiteId { get; set; }
 
+        DateTime CreatedDate { get; set; }
+
         string Name { get; set; }
 
         string Version { get; set; }//Versiyon değişince node' lşar günceleyecek ondan sonraki dosyaları.

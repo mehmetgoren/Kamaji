@@ -37,6 +37,7 @@
                         using (DbClient client = ionixFactory.CreateDbClient())
                         {
                             client.Cmd.QuerySingle<int>("delete from Model".ToQuery());//her initilize da kuyruğu temizle
+                            client.DataAccess.ExecuteNonQuery("vacuum".ToQuery());
                         }
                         this._isInitialized = true;
                     }

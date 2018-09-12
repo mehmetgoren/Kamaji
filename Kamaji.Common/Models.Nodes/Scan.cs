@@ -43,7 +43,7 @@
             AssignFailed = 4,
             Running = 8,//WorkerBase' de Staret da.
             Stopped = 16,//kullanıcı tarafından durdurduğunda. Örneğin arayüzden
-            Cancelled = 32,//node showdown edilince.
+            NodeShutdown = 32,//node showdown edilince.
             Completed = 64,//Once' da tamamlanmdığında. Örneğin linkler veya taramalar birince.
             Failed = 128// Hata yüzünden veya max error dan  durdurulunca.
         }

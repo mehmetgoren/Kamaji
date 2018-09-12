@@ -136,7 +136,7 @@
                 try
                 {
                     this.Model.State = dbState.Value;
-                    KamajiClient.Instance.Scans.EditScan(this.Model);
+                    _=KamajiClient.Instance.Scans.EditScan(this.Model);//not awaited!!!.
                 }
                 catch (Exception ex)
                 {
@@ -154,7 +154,7 @@
 
             private Kamaji.Common.IObserver Concrete { get; }
 
-            internal ProxyObserver(IObserver concrete)
+            internal ProxyObserver(Kamaji.Common.IObserver concrete)
             {
                 this.Concrete = concrete;
             }
