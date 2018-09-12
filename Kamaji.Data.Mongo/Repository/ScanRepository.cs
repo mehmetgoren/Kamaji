@@ -57,29 +57,6 @@
         }
 
 
-        public Task<int> BatchSave(IEnumerable<IScanModel> scanList)
-        {
-            int ret = 0;
-            if (null != scanList)
-            {
-                List<Scan> entitiyList = new List<Scan>();
-                foreach (IScanModel scan in scanList)
-                {
-                    if (null != scan && scan is Scan sc)
-                    {
-                        entitiyList.Add(sc);
-                    }
-                }
-
-                if (entitiyList.Count > 0)
-                    this.Db.Scans.InsertMany(entitiyList);
-                ret = entitiyList.Count;
-            }
-
-            return Task.FromResult(ret);
-        }
-
-
         private async Task GetRecursivelyChildList_Internal(List<IScanModel> list, ObjectId? parentId)
         {
             if (null == parentId)

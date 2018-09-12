@@ -1,11 +1,14 @@
 ﻿namespace Kamaji
 {
+    using ionix.Utils.Extensions;
     using Kamaji.Data;
+    using Kamaji.Data.Models;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using System.Threading.Tasks;
 
     public class Startup
     {
@@ -22,6 +25,7 @@
         public void ConfigureServices(IServiceCollection services)
         {
             InitKamajiRepository(services);
+            FixRunningScans().Wait();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1); 
         }
@@ -46,6 +50,21 @@
 
             services.AddScoped(typeof(IKamajiContext), db.GetType());
             DI.ServiceCollection.AddScoped(typeof(IKamajiContext), db.GetType());
+        }
+
+
+        private async Task FixRunningScans()
+        {
+            IKamajiContext db = DI.Provider.GetService<IKamajiContext>();
+            var fakeRunningScanList = await db.Scans.GetListBy(true,  ScanState.Running);
+            if (null != fakeRunningScanList)
+            {
+                foreach (var scan in fakeRunningScanList)
+                {
+                    scan.State = ScanState.NotStarted;
+                    await db.Scans.Edit(scan);
+                }
+            }
         }
     }
 }

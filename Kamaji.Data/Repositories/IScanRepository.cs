@@ -14,8 +14,6 @@
 
         Task<int> Edit(IScanModel model);//to edit stete to asiigned.
 
-        Task<int> BatchSave(IEnumerable<IScanModel> scanList);
-
         Task<IEnumerable<IScanModel>> GetRecursivelyChildList(object parentId);//postgres de recuirsaive çağır
 
         Task<IScanModel> GetBy(object scanId);
