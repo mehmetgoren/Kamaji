@@ -94,6 +94,7 @@
             return ret;
         }
 
+        private static readonly int nodeTimeout = DataSources.Jsons.AppSettings.Config.Nodes.Timeout;
         private static async Task<INodeModel> GetOptimumNode(IKamajiContext db)
         {
             IEnumerable<INodeModel> nodes = await db.Nodes.GetAll();
@@ -109,7 +110,7 @@
                 }
 
                 DateTime dbDate = await db.GetDbDateTime();
-                nodes = nodes.Where(p => p.LastConnectionTime.AddSeconds(10) > dbDate);//get all nodes that lives. Bu 10 saniyeyi config' e taşı.
+                nodes = nodes.Where(p => p.LastConnectionTime.AddSeconds(nodeTimeout) > dbDate);//get all nodes that lives. Bu 10 saniyeyi config' e taşı.
                 //direk node' lara söylememiz lazım kaç adet task ları olduğunu. hem böylece multi-task scan' leri de daha iyi yakalayabiliriz.
                 if (nodes.Any())
                 {

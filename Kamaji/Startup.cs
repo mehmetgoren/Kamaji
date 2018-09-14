@@ -1,6 +1,5 @@
 ﻿namespace Kamaji
 {
-    using ionix.Utils.Extensions;
     using Kamaji.Data;
     using Kamaji.Data.Models;
     using Microsoft.AspNetCore.Builder;
