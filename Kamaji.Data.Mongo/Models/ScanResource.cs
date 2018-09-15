@@ -22,6 +22,8 @@
 
         public DateTime CreatedDate { get; set; }
 
+        public DateTime LastModifiedDate { get; set; }
+
         public string Name { get; set; }
 
         public string Version { get; set; }

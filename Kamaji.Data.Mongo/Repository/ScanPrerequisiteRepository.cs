@@ -8,7 +8,6 @@
     using MongoDB.Driver;
     using MongoDB.Driver.Linq;
     using System;
-    using System.Linq;
     using System.Threading.Tasks;
 
     public sealed class ScanPrerequisiteRepository : RepositoryBase, IScanPrerequisiteRepository
@@ -53,7 +52,7 @@
                     ScanPrerequisite = d.To<ScanPrerequisite>()
                 });
 
-            return result.FirstOrDefault()?.ScanPrerequisite?.ScanPrerequisiteId;
+            return System.Linq.Enumerable.FirstOrDefault(result)?.ScanPrerequisite?.ScanPrerequisiteId;
         }
 
         public async Task<string> GetNameBy(object prerequisiteId)
@@ -72,7 +71,7 @@
                         ScanPrerequisite = d.To<ScanPrerequisite>()
                     });
 
-                return result.FirstOrDefault()?.ScanPrerequisite?.Name;
+                return System.Linq.Enumerable.FirstOrDefault(result)?.ScanPrerequisite?.Name;
             }
 
             return null;

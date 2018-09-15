@@ -11,23 +11,24 @@
     using Kamaji.Data.Models;
     using Microsoft.Extensions.DependencyInjection;
 
-    public sealed class ScanQueueService : NanoServiceBase
+    public abstract class ScanQueueServiceBase : NanoServiceBase
     {
-        public static readonly ScanQueueService Instance = new ScanQueueService();
-        private ScanQueueService()
-            : base(true,ConsoleObserver.Instance, TimeSpan.FromSeconds(1))
+        protected ScanQueueServiceBase()
+            : base(true, ConsoleObserver.Instance, TimeSpan.FromSeconds(1))
         {
             this.MaxErrorLimit = 0;
         }
 
-        protected override ITaskRunner CreateTaskRunner() => SimpleTaskRunner.Instance;
+        protected sealed override ITaskRunner CreateTaskRunner() => SimpleTaskRunner.Instance;
 
 
-        protected override async Task Execute(IObserver observer, CancellationToken cancellationToken)
+        protected abstract Task<IEnumerable<IScanModel>> GetScanList(IKamajiContext db);
+
+        protected sealed override async Task Execute(IObserver observer, CancellationToken cancellationToken)
         {
             using (IKamajiContext db = DI.Provider.GetService<IKamajiContext>())
             {
-                IEnumerable<IScanModel> scanList = await db.Scans.GetListBy(true, ScanState.NotStarted, ScanState.NodeShutdown, ScanState.AssignFailed);//Buraya parantid null olan da eklenebilir child lar otomatik başlıyorsa
+                IEnumerable<IScanModel> scanList = await this.GetScanList(db);
                 if (null != scanList && scanList.Any())
                 {
                     scanList = scanList.OrderBy(p => p.CreatedDate);
@@ -76,11 +77,13 @@
             await db.Scans.Edit(scan);
         }
 
+        private static readonly SemaphoreSlim _semaphoreSlim = new SemaphoreSlim(1);
         private static async Task<INodeModel> ChoseNode(IKamajiContext db, IScanModel scan)
         {
-            INodeModel ret = null;
-            if (null != scan)
+            await _semaphoreSlim.WaitAsync();
+            try
             {
+                INodeModel ret = null;
                 if (scan.SelectedNodeId != null)
                 {
                     ret = await db.Nodes.GetBy(scan.SelectedNodeId);
@@ -89,9 +92,13 @@
                 {
                     ret = await GetOptimumNode(db);
                 }
-            }
 
-            return ret;
+                return ret;
+            }
+            finally
+            {
+                _semaphoreSlim.Release();
+            }
         }
 
         private static readonly int nodeTimeout = DataSources.Jsons.AppSettings.Config.Nodes.Timeout;

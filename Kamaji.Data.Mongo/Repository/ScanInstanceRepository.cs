@@ -29,15 +29,16 @@
 
         public async Task<IEnumerable<IScanInstanceModel>> GetListBy(IEnumerable<object> scanIds)
         {
+            List<ScanInstance> ret = new List<ScanInstance>();
             if (!scanIds.IsEmptyList())
             {
                 var filter = Builders<ScanInstance>.Filter.In(p => p.ScanId, System.Linq.Enumerable.Select(scanIds, p => (ObjectId)p));
                 var coll = MongoAdmin.GetCollection<ScanInstance>(this.Db.Database);
                 var find = await coll.FindAsync(filter);
-                return await find.ToListAsync();
+                ret.AddRange(await find.ToListAsync());
             }
 
-            return null;
+            return ret;
         }
 
 

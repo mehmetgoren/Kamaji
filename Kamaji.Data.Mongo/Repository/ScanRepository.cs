@@ -7,7 +7,6 @@
     using MongoDB.Driver.Linq;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
 
     public sealed class ScanRepository : RepositoryBase, IScanRepository
@@ -15,16 +14,56 @@
         internal ScanRepository(DbContext Db) 
             : base(Db) { }
 
+
+
         public async Task<IEnumerable<IScanModel>> GetListBy(bool enabled, params ScanState[] states)
         {
-            if (null == states || states.Length == 0)
-                return null;
-
             List<IScanModel> results = new List<IScanModel>();
-            foreach (ScanState state in states)
+            if (null != states && states.Length > 0)
             {
-                results.AddRange(await this.Db.Scans.AsQueryable().Where(p => p.Enabled && p.State == state).ToListAsync());
+                foreach (ScanState state in states)
+                {
+                    results.AddRange(await this.Db.Scans.AsQueryable().Where(p => p.Enabled == enabled && p.State == state).ToListAsync());//non scheduled.
+                }
             }
+            return results;
+        }
+
+        public async Task<IEnumerable<IScanModel>> GetOnDemandListBy(bool enabled, params ScanState[] states)
+        {
+            List<IScanModel> results = new List<IScanModel>();
+            if (null != states && states.Length > 0)
+            {
+                foreach (ScanState state in states)
+                {
+                    results.AddRange(await this.Db.Scans.AsQueryable().Where(p => p.Enabled == enabled && p.ScanScheduleId == null && p.State == state).ToListAsync());//non scheduled.
+                }
+            }
+            return results;
+        }
+
+
+        public async Task<IEnumerable<IScanModel>> GetScheduledListBy(bool enabled, DateTime date, params ScanState[] states)
+        {
+            List<IScanModel> results = new List<IScanModel>();
+
+            if (null != states && states.Length > 0)
+            {
+                List<IScanModel> temp = new List<IScanModel>();
+                foreach (ScanState state in states)
+                {
+                    temp.AddRange(await this.Db.Scans.AsQueryable().Where(p => p.Enabled == enabled && p.ScanScheduleId != null && p.State == state).ToListAsync());//non scheduled.
+                }
+                foreach (IScanModel scan in temp)
+                {
+                    IScanSchedule schedule = await this.Db.ScanSchedules.GetByIdAsync(scan.ScanScheduleId);
+                    if (null != schedule && schedule.IsItTime(date))
+                    {
+                        results.Add(scan);
+                    }
+                }
+            }
+
             return results;
         }
 
@@ -72,14 +111,13 @@
         }
         public async Task<IEnumerable<IScanModel>> GetRecursivelyChildList(object parentId)
         {
+            List<IScanModel> list = new List<IScanModel>();
             if (parentId is ObjectId id)
             {
-                List<IScanModel> list = new List<IScanModel>();
                 await GetRecursivelyChildList_Internal(list, id);
-                return list;
             }
 
-            return null;
+            return list;
         }
 
 

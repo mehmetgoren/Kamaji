@@ -7,6 +7,7 @@
         object ScanPrerequisiteId { get; set; }
 
         DateTime CreatedDate { get; set; }
+        DateTime LastModifiedDate { get; set; }
 
         string Name { get; set; }
 

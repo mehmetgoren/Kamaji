@@ -14,7 +14,7 @@
         public DbContext(IConnectionStringProvider provider)
         {
             if (null == provider)
-                throw new ArgumentNullException("Please register ConnectionStringProvider using Startup.Register function");
+                throw new ArgumentNullException("Please register ConnectionStringProvider using Startup.Register method");
 
             this.Database = MongoAdmin.GetDatabase(new MongoClient(provider.ConnectionString), provider.DatabaseName);
 
@@ -26,15 +26,13 @@
             this._scanInstances = this.GetLazy<ScanInstance>();
             this._nodes = this.GetLazy<Node>();
             this._authes = this.GetLazy<Auth>();
+            this._scanSchedules = this.GetLazy<ScanSchedule>();
         }
 
         public Task<HostInfo> HostInfoAsync() => MongoAdmin.GetHostInfoAsync(this.Database);
 
 
-        private Lazy<MongoRepository<TEntity>> GetLazy<TEntity>()
-        {
-            return new Lazy<MongoRepository<TEntity>>(() => new MongoRepository<TEntity>(this.Database), true);
-        }
+        private Lazy<MongoRepository<TEntity>> GetLazy<TEntity>() => new Lazy<MongoRepository<TEntity>>(() => new MongoRepository<TEntity>(this.Database), true);
 
 
         private readonly Lazy<MongoRepository<ScanPrerequisite>> _scanPrerequisites;
@@ -58,5 +56,8 @@
 
         private readonly Lazy<MongoRepository<Auth>> _authes;
         public MongoRepository<Auth> Authes => this._authes.Value;
+
+        private readonly Lazy<MongoRepository<ScanSchedule>> _scanSchedules;
+        public MongoRepository<ScanSchedule> ScanSchedules => this._scanSchedules.Value;
     }
 }

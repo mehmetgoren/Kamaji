@@ -35,6 +35,7 @@
 
         //MongoDB ' de DateTime.Now, Postgres' de default value
         DateTime CreatedDate { get; set; }
+        DateTime LastModifiedDate { get; set; }
 
         string Asset { get; set; }
 
@@ -78,5 +79,8 @@
         /// Max result number
         /// </summary>
         int MaxInstance { get; set; }
+
+
+        object ScanScheduleId { get; set; }
     }
 }

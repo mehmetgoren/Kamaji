@@ -9,7 +9,6 @@
     using MongoDB.Driver.Linq;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
 
     public sealed class NodeRepository : RepositoryBase, INodeRepository
@@ -56,7 +55,7 @@
                     Node = d.To<Node>()
                 });
 
-            return result.FirstOrDefault()?.Node?.NodeId;
+            return System.Linq.Enumerable.FirstOrDefault(result)?.Node?.NodeId;
         }
 
         public async Task<INodeModel> GetBy(object nodeId)

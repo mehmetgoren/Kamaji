@@ -8,7 +8,6 @@
     using MongoDB.Driver;
     using MongoDB.Driver.Linq;
     using System;
-    using System.Linq;
     using System.Threading.Tasks;
 
     public sealed class ScanResourceRepository : RepositoryBase, IScanResourceRepository
@@ -54,7 +53,7 @@
                     ScanResource = d.To<ScanResource>()
                 });
 
-            return result.FirstOrDefault()?.ScanResource?.ScanResourceId;
+            return System.Linq.Enumerable.FirstOrDefault(result)?.ScanResource?.ScanResourceId;
         }
 
         public async Task<IScanResourceModel> GetBy(object scanResourceId)

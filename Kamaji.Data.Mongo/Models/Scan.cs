@@ -3,6 +3,7 @@
     using ionix.Data.Mongo;
     using Kamaji.Data.Models;
     using MongoDB.Bson;
+    using MongoDB.Bson.Serialization;
     using MongoDB.Bson.Serialization.Attributes;
     using System;
     using System.Collections.Generic;
@@ -20,6 +21,8 @@
 
 
         public DateTime CreatedDate { get; set; }
+
+        public DateTime LastModifiedDate { get; set; }
 
         public string Asset { get; set; }
 
@@ -50,6 +53,7 @@
         public BsonDocument ArgsBson { get; set; }
 
         public bool SaveNullResult { get; set; }
+
 
         public int MaxInstance { get; set; }
 
@@ -85,5 +89,8 @@
                 this.ArgsBson = document;
             }
         }
+
+        public ObjectId? ScanScheduleId { get; set; }
+        object IScanModel.ScanScheduleId { get => this.ScanScheduleId; set => this.ScanScheduleId = (ObjectId?)value; }
     }
 }

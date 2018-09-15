@@ -23,9 +23,14 @@
             Task.Run(async () =>
             {
                 var logger = Utility.CreateLogger(nameof(NodeController), nameof(StartNanoServices)).Code(111);
+
                 await logger.Info("ScanQueueService is starting...").SaveAsync();
-                await ScanQueueService.Instance.Start();
+                await OnDemandScanQueueService.Instance.Start();//scheduled de eklenecek.
                 await logger.Info("ScanQueueService has been stopped...").SaveAsync();
+
+                //await logger.Info("ScanQueueService is starting...").SaveAsync();
+                //await ScheduledScanQueueService.Instance.Start();//scheduled de eklenecek.
+                //await logger.Info("ScanQueueService has been stopped...").SaveAsync();
             });
         }
 
