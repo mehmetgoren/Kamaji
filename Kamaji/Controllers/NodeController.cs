@@ -27,10 +27,24 @@
                 await logger.Info("ScanQueueService is starting...").SaveAsync();
                 await OnDemandScanQueueService.Instance.Start();//scheduled de eklenecek.
                 await logger.Info("ScanQueueService has been stopped...").SaveAsync();
+            });
+
+            Task.Run(async () =>
+            {
+                var logger = Utility.CreateLogger(nameof(NodeController), nameof(StartNanoServices)).Code(112);
 
                 await logger.Info("ScheduledQueueService is starting...").SaveAsync();
                 await ScheduledScanQueueService.Instance.Start();//scheduled de eklenecek.
                 await logger.Info("ScheduledQueueService has been stopped...").SaveAsync();
+            });
+
+            Task.Run(async () =>
+            {
+                var logger = Utility.CreateLogger(nameof(NodeController), nameof(StartNanoServices)).Code(113);
+
+                await logger.Info("BrokenNodeService is starting...").SaveAsync();
+                await BrokenNodeService.Instance.Start();//scheduled de eklenecek.
+                await logger.Info("BrokenNodeService has been stopped...").SaveAsync();
             });
         }
 

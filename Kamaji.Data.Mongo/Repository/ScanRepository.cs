@@ -128,5 +128,17 @@
 
             return null;
         }
+
+
+        public async Task<IEnumerable<IScanModel>> GetListByLastAssignedNodeId(bool enabled, object nodeId)
+        {
+            List<IScanModel> ret = new List<IScanModel>();
+            if (nodeId is ObjectId id)
+            {
+                ret.AddRange(await this.Db.Scans.AsQueryable().Where(p => p.Enabled == enabled && p.LastAssignedNodeId == id).ToListAsync());
+            }
+
+            return ret;
+        }
     }
 }

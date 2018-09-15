@@ -11,7 +11,7 @@
     using Kamaji.Data.Models;
     using Microsoft.Extensions.DependencyInjection;
 
-    public abstract class ScanQueueServiceBase : NanoServiceBase
+    internal abstract class ScanQueueServiceBase : NanoServiceBase
     {
         protected ScanQueueServiceBase()
             : base(true, ConsoleObserver.Instance, TimeSpan.FromSeconds(1))
@@ -104,7 +104,7 @@
         private static readonly int nodeTimeout = DataSources.Jsons.AppSettings.Config.Nodes.Timeout;
         private static async Task<INodeModel> GetOptimumNode(IKamajiContext db)
         {
-            IEnumerable<INodeModel> nodes = await db.Nodes.GetAll();
+            IEnumerable<INodeModel> nodes = await db.Nodes.GetAll();//eğer 5000 node bağlanırsa bunu değiştir.
             if (null != nodes && nodes.Any())
             {
                 double CalculateAvailabilityScore(INodeModel node)

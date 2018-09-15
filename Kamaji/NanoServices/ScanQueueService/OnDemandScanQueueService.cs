@@ -5,7 +5,7 @@
     using Kamaji.Data;
     using Kamaji.Data.Models;
 
-    public sealed class OnDemandScanQueueService : ScanQueueServiceBase
+    internal sealed class OnDemandScanQueueService : ScanQueueServiceBase
     {
         public static readonly OnDemandScanQueueService Instance = new OnDemandScanQueueService();
         private OnDemandScanQueueService() { }

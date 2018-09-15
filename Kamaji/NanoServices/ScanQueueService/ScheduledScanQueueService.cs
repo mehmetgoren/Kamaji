@@ -6,7 +6,7 @@
     using Kamaji.Data;
     using Kamaji.Data.Models;
 
-    public sealed class ScheduledScanQueueService : ScanQueueServiceBase
+    internal sealed class ScheduledScanQueueService : ScanQueueServiceBase
     {
         public static readonly ScheduledScanQueueService Instance = new ScheduledScanQueueService();
         private ScheduledScanQueueService() { }

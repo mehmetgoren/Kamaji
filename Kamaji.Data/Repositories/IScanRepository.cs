@@ -22,5 +22,7 @@
         Task<IEnumerable<IScanModel>> GetRecursivelyChildList(object parentId);//postgres de recuirsaive çağır
 
         Task<IScanModel> GetBy(object scanId);
+
+        Task<IEnumerable<IScanModel>> GetListByLastAssignedNodeId(bool enabled, object nodeId);
     }
 }
