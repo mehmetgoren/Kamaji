@@ -28,9 +28,9 @@
                 await OnDemandScanQueueService.Instance.Start();//scheduled de eklenecek.
                 await logger.Info("ScanQueueService has been stopped...").SaveAsync();
 
-                //await logger.Info("ScanQueueService is starting...").SaveAsync();
-                //await ScheduledScanQueueService.Instance.Start();//scheduled de eklenecek.
-                //await logger.Info("ScanQueueService has been stopped...").SaveAsync();
+                await logger.Info("ScheduledQueueService is starting...").SaveAsync();
+                await ScheduledScanQueueService.Instance.Start();//scheduled de eklenecek.
+                await logger.Info("ScheduledQueueService has been stopped...").SaveAsync();
             });
         }
 

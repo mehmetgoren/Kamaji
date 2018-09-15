@@ -44,7 +44,7 @@
         //template method pattern
         protected sealed override async Task Execute(IObserver observer, CancellationToken cancellationToken)
         {
-            DateTime dbDateTime = await KamajiClient.Instance.Nodes.DbDateTime();
+            DateTime dbDateTime = (await KamajiClient.Instance.Nodes.DbDateTime())??DateTime.Now;
 
             ScanInstanceModel scanInstance = new ScanInstanceModel();
             scanInstance.Asset = this.Model.Asset;

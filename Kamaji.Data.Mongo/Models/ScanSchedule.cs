@@ -8,7 +8,7 @@
 
     [MongoCollection(Name = nameof(ScanSchedule))]
     [MigrationVersion(Migration100.VersionNo)]
-    [MongoIndex("Time")]
+   // [MongoIndex("Time")]
     public class ScanSchedule : ScanScheduleModelBase<ObjectId>
     {
         [BsonId]

@@ -70,9 +70,18 @@
             }
 
 
-            public Task<DateTime> DbDateTime()
+            public async Task<DateTime?> DbDateTime()
             {
-                return RestClient.Instance.GetAsync<DateTime>($"{KamajiNodeActions.DbDateTime}");
+                //return Task.FromResult(DateTime.Now);
+                try
+                {
+                    return await RestClient.Instance.GetAsync<DateTime>($"{KamajiNodeActions.DbDateTime}");
+                }
+                catch (Exception ex)
+                {
+                    _=Utility.CreateLogger(nameof(KamajiClient), nameof(DbDateTime)).Code(2).Error(ex).SaveAsync();
+                    return null;//çünküğ opffline data çalşışmnıyorduç
+                }
             }
         }
     }
