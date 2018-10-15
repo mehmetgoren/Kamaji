@@ -23,6 +23,6 @@
 
         Task<IScanModel> GetBy(object scanId);
 
-        Task<IEnumerable<IScanModel>> GetListByLastAssignedNodeId(bool enabled, object nodeId);
+        Task<IEnumerable<IScanModel>> GetListByLastAssignedNodeId(bool enabled, object nodeId, ScanState state);
     }
 }

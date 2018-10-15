@@ -104,7 +104,7 @@
             List<Scan> childs = await this.Db.Scans.AsQueryable().Where(p => p.ParentId == parentId).ToListAsync();
             foreach (Scan child in childs)
             {
-                await GetRecursivelyChildList_Internal(list, child.ScanId);
+                await this.GetRecursivelyChildList_Internal(list, child.ScanId);
             }
 
             list.AddRange(childs);
@@ -114,7 +114,7 @@
             List<IScanModel> list = new List<IScanModel>();
             if (parentId is ObjectId id)
             {
-                await GetRecursivelyChildList_Internal(list, id);
+                await this.GetRecursivelyChildList_Internal(list, id);
             }
 
             return list;
@@ -130,12 +130,12 @@
         }
 
 
-        public async Task<IEnumerable<IScanModel>> GetListByLastAssignedNodeId(bool enabled, object nodeId)
+        public async Task<IEnumerable<IScanModel>> GetListByLastAssignedNodeId(bool enabled, object nodeId, ScanState state)
         {
             List<IScanModel> ret = new List<IScanModel>();
             if (nodeId is ObjectId id)
             {
-                ret.AddRange(await this.Db.Scans.AsQueryable().Where(p => p.Enabled == enabled && p.LastAssignedNodeId == id).ToListAsync());
+                ret.AddRange(await this.Db.Scans.AsQueryable().Where(p => p.Enabled == enabled && p.State == state && p.LastAssignedNodeId == id).ToListAsync());
             }
 
             return ret;

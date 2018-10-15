@@ -37,7 +37,7 @@
                     {
                         foreach (INodeModel node in brokenNodes)
                         {
-                            IEnumerable<IScanModel> scans = await db.Scans.GetListByLastAssignedNodeId(true, node.NodeId);
+                            IEnumerable<IScanModel> scans = await db.Scans.GetListByLastAssignedNodeId(true, node.NodeId, ScanState.Running);
                             if (!scans.IsEmptyList())
                             {
                                 foreach (IScanModel scan in scans)
