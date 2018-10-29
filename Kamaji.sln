@@ -19,6 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kamaji.Common", "Kamaji.Com
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{22819CF7-9AD9-43F4-A35D-8821D830811B}"
 	ProjectSection(SolutionItems) = preProject
+		Db_ubuntu_Installation.txt = Db_ubuntu_Installation.txt
 		StartKamaji.bat = StartKamaji.bat
 		StartNode.bat = StartNode.bat
 		Tests.bat = Tests.bat

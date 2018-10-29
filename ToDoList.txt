@@ -30,6 +30,7 @@
 * Prereqw ve resource' a createddate ekle.
 * Belirli tarihlerede çalýþacak, örneð,n hafta içi servisler olsun. Burasý scheduler time olacak. Haftanýn günlerini flag enum ile alacak ve o tarihte çalýþtýracak.
 	Bir de bunun için de  kamaji' de ayrý bir scanqueue servisi olacak ve o da zamaný gelen servcisleri çalýþtýracak. Standart olan ise schedule time' ý verilewnleri seçmeyecek.
+* Node leak olan nodejs process lerini restart da o portu kullanan nodejs process lerini kill etsin.
 
 
 *Önce WebScan, Process scan, Port Scan(Nmap), OpenVas ve open source diðer web zaafiyet tarayýcý.
@@ -37,7 +38,13 @@
 * Bir de dovizborsa da anlýk deðiþmleri alýp result olarak gönderecek bir servis olacak. Sonra bu servis üzerinde regression algoritmalarý çalýþtýrýlýp dolar tahmini yapacaðýz.
 * Process takibi ve classification ile zararlý process lerin tespiti.
 
+* nmap ile recuirsvive bir þekilde otomatik cihaz tespiti yapacak ve bunlarý otomatik izlemeye alacak.
+* Ýþ daðýtmada iki tür olacak. biri internal yani nmap ve web scan. openvas,arachni vb de kurulu olduklarý sanal makine adreslerine göre ayrý bir daðýtým algoritmasýna sahip olcak.
+  hangi vm de çalýþacaðýna karar verildikten sonra yeniden daðýtýmöa girilecek. (*** Bu ikinci daðýtým scanix' da yapýlsýn ayný math formülü ile.  ***)
 
+** Node' lar gelen request de iamyourbase ve header dan request yapan makinanýn ip sine' de bakýp auth yapmalý. *
+*** rest uygulama kamaji' ye istek yapýp, node' lardaki bir kodu bir rest api ile çalýþtýrabilecek. argümanlþar json oplarak geçecek. örneðin tshark da ethernek kartlarýný listelerkken ilgili node' un tshark  -D
+	komutunu çalýþtýracak ve arayüzden kullanýcýya seçmesini sunabilecek.***
 
 !!!!!!!!!!!! "c# distributed computing" google' da arat:
 https://msdn.microsoft.com/en-us/library/dd129906.aspx?f=255&MSPPError=-2147217396

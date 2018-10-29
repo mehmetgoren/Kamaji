@@ -1,9 +1,7 @@
 ﻿namespace Kamaji.Controllers
 {
     using ionix.Utils.Extensions;
-    using ionix.Utils.Reflection;
     using Kamaji.Common;
-    using Kamaji.Common.Models;
     using Kamaji.Data;
     using Kamaji.Data.Models;
     using Microsoft.AspNetCore.Mvc;
@@ -88,33 +86,34 @@
             }
 
 
+            return Json(new { count = ret.Count, result = ret });
 
-            const string host = "http://toastytech.com";
-            HashSet<string> spiderLinks = new HashSet<string>(System.IO.File.ReadAllLines("g:\\LinksSpider.csv").Select(i => host + i));
+            //const string host = "http://toastytech.com";
+            //HashSet<string> spiderLinks = new HashSet<string>(System.IO.File.ReadAllLines("g:\\LinksSpider.csv").Select(i => host + i));
 
-            List<string> kamaji = new List<string>();
-            foreach (string link in ret)
-            {
-                if (!spiderLinks.Contains(link))
-                    kamaji.Add(link);
-            }
+            //List<string> kamaji = new List<string>();
+            //foreach (string link in ret)
+            //{
+            //    if (!spiderLinks.Contains(link))
+            //        kamaji.Add(link);
+            //}
 
-            List<string> spiders = new List<string>();
-            foreach (string link in spiderLinks)
-            {
-                if (!ret.Contains(link))
-                    spiders.Add(link);
-            }
+            //List<string> spiders = new List<string>();
+            //foreach (string link in spiderLinks)
+            //{
+            //    if (!ret.Contains(link))
+            //        spiders.Add(link);
+            //}
 
-            System.IO.File.WriteAllText("g:\\LinksKamaji.json", JsonConvert.SerializeObject(ret));
-
-
-            var result = new { count = ret.Count, links = ret, kamaji, spiders };
+            //System.IO.File.WriteAllText("g:\\LinksKamaji.json", JsonConvert.SerializeObject(ret));
 
 
-            //System.IO.File.WriteAllText("g:\\result.json", JsonConvert.SerializeObject(result));
+            //var result = new { count = ret.Count, links = ret, kamaji, spiders };
 
-            return Json(result);
+
+            ////System.IO.File.WriteAllText("g:\\result.json", JsonConvert.SerializeObject(result));
+
+            //return Json(result);
         }
 
 

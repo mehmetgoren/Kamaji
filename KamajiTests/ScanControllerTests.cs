@@ -9,6 +9,8 @@ namespace KamajiTests
     [TestClass]
     public class ScanControllerTests
     {
+        const string RootPath = @"X:\Projects\Kamaji\src\KamajiTests\";
+
         [TestMethod]
         public async Task SaveScanPrerequisiteTest()
         {
@@ -16,10 +18,12 @@ namespace KamajiTests
             await RestClient.Instance.SignIn();
             ScanPrerequisiteModel model;
 
+            string path = RootPath + "puppeteer_1.9.0&express_4.16.4.zip";// Utility.GetExecutionPath() + "\\puppeteer_1.9.0&express_4.16.4.zip";
+
             model = new ScanPrerequisiteModel();
             model.Name = "puppeteer";
             model.Version = "1.0.0";
-            model.Resources = await File.ReadAllBytesAsync(Utility.GetExecutionPath() + "\\puppeteer_1.4.0&express_4.16.3.zip");
+            model.Resources = await File.ReadAllBytesAsync(path);
             result = await RestClient.Instance.PostAsync<int>("Scan/SaveScanPrerequisite", model);
 
             Assert.AreEqual(result, 1);
@@ -33,28 +37,28 @@ namespace KamajiTests
             ScanResourceModel model;
 
 
-            //model = new ScanResourceModel();
-            //model.Name = "WebPageHtmlSource";
-            //model.Version = "1.0.0";
-            //model.ScanPrerequisiteName = "puppeteer";
-            //model.Resources = await File.ReadAllBytesAsync(Utility.GetExecutionPath() + "\\WebPageHtmlSourceWorker.zip");
-            //result = await RestClient.Instance.PostAsync<int>("Scan/SaveScanResource", model);
+            model = new ScanResourceModel();
+            model.Name = "WebPageHtmlSource";
+            model.Version = "1.0.0";
+            model.ScanPrerequisiteName = "puppeteer";
+            model.Resources = await File.ReadAllBytesAsync(RootPath + "WebPageHtmlSourceWorker.zip" /*Utility.GetExecutionPath() + "\\WebPageHtmlSourceWorker.zip*/);
+            result = await RestClient.Instance.PostAsync<int>("Scan/SaveScanResource", model);
 
 
-            //model = new ScanResourceModel();
-            //model.Name = "WebPageScreenshotWorker";
-            //model.Version = "1.0.0";
-            //model.ScanPrerequisiteName = "puppeteer";
-            //model.Resources = await File.ReadAllBytesAsync(Utility.GetExecutionPath() + "\\WebPageScreenshotWorker.zip");
-            //result = await RestClient.Instance.PostAsync<int>("Scan/SaveScanResource", model);
+            model = new ScanResourceModel();
+            model.Name = "WebPageScreenshotWorker";
+            model.Version = "1.0.0";
+            model.ScanPrerequisiteName = "puppeteer";
+            model.Resources = await File.ReadAllBytesAsync(RootPath + "WebPageScreenshotWorker.zip");
+            result = await RestClient.Instance.PostAsync<int>("Scan/SaveScanResource", model);
 
 
-            //model = new ScanResourceModel();
-            //model.Name = "WebPageSpider";
-            //model.Version = "1.0.0";
-            //model.ScanPrerequisiteName = "puppeteer";
-            //model.Resources = await File.ReadAllBytesAsync(Utility.GetExecutionPath() + "\\WebPageSpider.zip");
-            //result = await RestClient.Instance.PostAsync<int>("Scan/SaveScanResource", model);
+            model = new ScanResourceModel();
+            model.Name = "WebPageSpider";
+            model.Version = "1.0.0";
+            model.ScanPrerequisiteName = "puppeteer";
+            model.Resources = await File.ReadAllBytesAsync(RootPath + "WebPageSpider.zip");
+            result = await RestClient.Instance.PostAsync<int>("Scan/SaveScanResource", model);
 
 
             //model = new ScanResourceModel();
@@ -70,12 +74,12 @@ namespace KamajiTests
             //model.Resources = await File.ReadAllBytesAsync(Utility.GetExecutionPath() + "\\Dollars.zip");
             //result = await RestClient.Instance.PostAsync<int>("Scan/SaveScanResource", model);
 
-            model = new ScanResourceModel();
-            model.Name = "nmap_windows";
-            model.Version = "1.0.0";
-           // model.ScanPrerequisiteName = "nmap_windows";
-            model.Resources = await File.ReadAllBytesAsync(Utility.GetExecutionPath() + "\\NmapWorker.zip");
-            result = await RestClient.Instance.PostAsync<int>("Scan/SaveScanResource", model);
+            // model = new ScanResourceModel();
+            // model.Name = "nmap_windows";
+            // model.Version = "1.0.0";
+            //// model.ScanPrerequisiteName = "nmap_windows";
+            // model.Resources = await File.ReadAllBytesAsync(Utility.GetExecutionPath() + "\\NmapWorker.zip");
+            // result = await RestClient.Instance.PostAsync<int>("Scan/SaveScanResource", model);
 
             Assert.AreEqual(result, 1);
         }
@@ -96,16 +100,16 @@ namespace KamajiTests
 
             //model = new ScanModel();
             //model.Asset = "https://odatv.com/";
-            //model.Period = 13000;
+            //model.Period = 10000;
             //model.ResourceName = "WebPageScreenshotWorker";
             //result = await RestClient.Instance.PostAsync<int>("Scan/SaveScan", model);
 
 
-            //model = new ScanModel();
-            //model.Asset =  "https://demos.telerik.com/aspnet-mvc/tripxpert/";//"http://toastytech.com/evil/";
-            //model.Type = ScanModel.ScanType.Once;
-            //model.ResourceName = "WebPageSpider";
-            //result = await RestClient.Instance.PostAsync<int>("Scan/SaveScan", model);
+            model = new ScanModel();
+            model.Asset = "http://toastytech.com/evil/";//"https://demos.telerik.com/aspnet-mvc/tripxpert/";
+            model.Type = ScanModel.ScanType.Once;
+            model.ResourceName = "WebPageSpider";
+            result = await RestClient.Instance.PostAsync<int>("Scan/SaveScan", model);
 
 
             //model = new ScanModel();
@@ -129,11 +133,11 @@ namespace KamajiTests
             ////model.MaxInstance = 1000000;
             //result = await RestClient.Instance.PostAsync<int>("Scan/SaveScan", model);
 
-            model = new ScanModel();
-            model.Asset = "-PS 127.0.0.1";
-            model.Period = 10000;
-            model.ResourceName = "nmap_windows";
-            result = await RestClient.Instance.PostAsync<int>("Scan/SaveScan", model);
+            //model = new ScanModel();
+            //model.Asset = "-PS 127.0.0.1";
+            //model.Period = 10000;
+            //model.ResourceName = "nmap_windows";
+            //result = await RestClient.Instance.PostAsync<int>("Scan/SaveScan", model);
 
             Assert.AreEqual(result, 1);
         }

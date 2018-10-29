@@ -1,0 +1,12 @@
+Postgresql
+	* Download the ".run" file by clicking the  https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
+	* Enter "sudo ./postgresql-10.5-2-linux-x64.run" command to open installation wizard.
+	* /opt/PostgreSQL/10/data/postgresql.conf -> listen_addresses = '*'
+	* /opt/PostgreSQL/10/data/ ->
+		# IPv4 local connections:
+		host    all             all             127.0.0.1/32            md5
+		host	all				all				<client ip address>/32			md5
+
+MongoDB
+	https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/ (it contains all information you will be ever needed)
+	* etc klasörü içindeki  mongod.conf dosyasýndan -> bind_ip = 127.0.0.1,192.168.161.100
